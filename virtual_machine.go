@@ -95,6 +95,7 @@ const interfaceTmplStr = `
 <interface type='bridge'>
   <source bridge='{{.Bridge}}'/>
   <model type='virtio'/>
+  <target dev='{{.Name}}'/>
   <bandwidth>
     <inbound average='{{.InboundAverage}}'/>
     <outbound average='{{.OutboundAverage}}'/>

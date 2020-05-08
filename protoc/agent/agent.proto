@@ -70,6 +70,7 @@ message AttachInterfaceRequest {
   string bridge = 2;
   uint32 inbound_average = 3;
   uint32 outbound_average = 4;
+  string name = 5;
 }
 
 message StartVirtualMachineRequest {
