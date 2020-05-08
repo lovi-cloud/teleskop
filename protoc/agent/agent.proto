@@ -1,0 +1,143 @@
+syntax = "proto3";
+
+package agent;
+
+service Agent {
+  rpc GetISCSIQualifiedName(GetISCSIQualifiedNameRequest) returns (GetISCSIQualifiedNameResponse) {}
+  rpc GetIPTables(GetIPTablesRequest) returns (GetIPTablesResponse) {}
+
+  rpc SetupDefaultSecurityGroup(SetupDefaultSecurityGroupRequest) returns (SetupDefaultSecurityGroupResponse) {}
+  rpc AddSecurityGroup(AddSecurityGroupRequest) returns (AddSecurityGroupResponse) {}
+
+  rpc AddBridge(AddBridgeRequest) returns (AddBridgeResponse) {}
+  rpc AddVLANInterface(AddVLANInterfaceRequest) returns (AddVLANInterfaceResponse) {}
+  rpc AddInterfaceToBridge(AddInterfaceToBridgeRequest) returns (AddInterfaceToBridgeResponse) {}
+  rpc AddVirtualMachine(AddVirtualMachineRequest) returns (AddVirtualMachineResponse) {}
+
+  rpc StartVirtualMachine(StartVirtualMachineRequest) returns (StartVirtualMachineResponse) {}
+  rpc AttachBlockDevice(AttachBlockDeviceRequest) returns (AttachBlockDeviceResponse) {}
+  rpc AttachInterface(AttachInterfaceRequest) returns (AttachInterfaceResponse) {}
+
+  rpc DeleteBridge(DeleteBridgeRequest) returns (DeleteBridgeResponse) {}
+  rpc DeleteVLANInterface(DeleteVLANInterfaceRequest) returns (DeleteVLANInterfaceResponse) {}
+  rpc DeleteInterfaceFromBridge(DeleteInterfaceFromBridgeRequest) returns (DeleteInterfaceFromBridgeResponse) {}
+}
+
+message GetISCSIQualifiedNameRequest {
+}
+
+message GetIPTablesRequest {
+}
+
+message SetupDefaultSecurityGroupRequest {
+}
+
+message AddSecurityGroupRequest {
+  string interface = 1;
+  string ip_address = 2;
+  string mac_address = 3;
+}
+
+message AddBridgeRequest {
+  string name = 1;
+}
+
+message AddVLANInterfaceRequest {
+  uint32 vlan_id = 1;
+  string parent_interface = 2;
+}
+
+message AddInterfaceToBridgeRequest {
+  string bridge = 1;
+  string interface = 2;
+}
+
+message AddVirtualMachineRequest {
+  string name = 1;
+  uint32 vcpus = 2;
+  uint64 memory_kib = 3;
+  string boot_device = 4;
+}
+
+message AttachBlockDeviceRequest {
+  string uuid = 1;
+  string source_device = 2;
+  string target_device = 3;
+}
+
+message AttachInterfaceRequest {
+  string uuid = 1;
+  string bridge = 2;
+  uint32 inbound_average = 3;
+  uint32 outbound_average = 4;
+}
+
+message StartVirtualMachineRequest {
+  string uuid = 1;
+}
+
+message DeleteBridgeRequest {
+  string name = 1;
+}
+
+message DeleteVLANInterfaceRequest {
+  uint32 vlan_id = 1;
+  string parent_interface = 2;
+}
+
+message DeleteInterfaceFromBridgeRequest {
+  string bridge = 1;
+  string interface = 2;
+}
+
+// response
+message GetISCSIQualifiedNameResponse {
+  string iqn = 1;
+}
+
+message GetIPTablesResponse {
+}
+
+message SetupDefaultSecurityGroupResponse {
+}
+
+message AddSecurityGroupResponse {
+}
+
+message AddBridgeResponse {
+}
+
+message AddVLANInterfaceResponse {
+}
+
+message AddInterfaceToBridgeResponse {
+}
+
+message AddVirtualMachineResponse {
+  string uuid = 1;
+  string name = 2;
+}
+
+message StartVirtualMachineResponse {
+  string uuid = 1;
+  string name = 2;
+}
+
+message AttachBlockDeviceResponse {
+  string uuid = 1;
+  string name = 2;
+}
+
+message AttachInterfaceResponse {
+  string uuid = 1;
+  string name = 2;
+}
+
+message DeleteBridgeResponse {
+}
+
+message DeleteVLANInterfaceResponse {
+}
+
+message DeleteInterfaceFromBridgeResponse {
+}
