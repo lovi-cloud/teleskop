@@ -11,7 +11,7 @@ import (
 )
 
 func (a *agent) ConnectBlockDevice(ctx context.Context, req *pb.ConnectBlockDeviceRequest) (*pb.ConnectBlockDeviceResponse, error) {
-	deviceName, err := osbrick.ConnectMultipathVolume(ctx, req.PortalAddresses, req.LunId)
+	deviceName, err := osbrick.ConnectMultipathVolume(ctx, req.PortalAddresses, req.HostLunId)
 	if err != nil {
 		return nil, status.Errorf(codes.Internal, "failed to connect block device: %+v", err)
 	}
