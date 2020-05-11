@@ -19,6 +19,8 @@ service Agent {
       returns (AddInterfaceToBridgeResponse) {}
   rpc AddVirtualMachine(AddVirtualMachineRequest)
       returns (AddVirtualMachineResponse) {}
+  rpc ConnectBlockDevice(ConnectBlockDeviceRequest)
+      returns (ConnectBlockDeviceResponse) {}
 
   rpc StartVirtualMachine(StartVirtualMachineRequest)
       returns (StartVirtualMachineResponse) {}
@@ -65,6 +67,11 @@ message AddVirtualMachineRequest {
   uint32 vcpus       = 2;
   uint64 memory_kib  = 3;
   string boot_device = 4;
+}
+
+message ConnectBlockDeviceRequest {
+  repeated string portal_addresses = 1;
+  string          lun_id           = 2;
 }
 
 message AttachBlockDeviceRequest {
@@ -119,6 +126,10 @@ message AddInterfaceToBridgeResponse {}
 message AddVirtualMachineResponse {
   string uuid = 1;
   string name = 2;
+}
+
+message ConnectBlockDeviceResponse {
+  string device_name = 1;
 }
 
 message StartVirtualMachineResponse {
