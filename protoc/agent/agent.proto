@@ -71,7 +71,7 @@ message AddVirtualMachineRequest {
 
 message ConnectBlockDeviceRequest {
   repeated string portal_addresses = 1;
-  string          host_lun_id      = 2;
+  uint32          host_lun_id      = 2;
 }
 
 message AttachBlockDeviceRequest {
