@@ -12,11 +12,12 @@ import (
 )
 
 const (
-	instanceName       = "yjuba-instance001"
-	instanceVCPUs      = 1
-	instanceMemoryKib  = 10004480
-	instanceBootDevice = "/dev/loop5"
-	instanceInterface  = "tap001"
+	instanceName         = "yjuba-instance001"
+	instanceVCPUs        = 1
+	instanceMemoryKib    = 10004480
+	instanceBootDevice   = "/dev/loop2"
+	instanceInterface    = "tap001"
+	instanceInterfaceMAC = "ca:61:85:97:93:e2"
 
 	bridgeName     = "br1000"
 	bandwidthLimit = 128000
@@ -59,6 +60,7 @@ func run() error {
 		InboundAverage:  bandwidthLimit,
 		OutboundAverage: bandwidthLimit,
 		Name:            instanceInterface,
+		MacAddress:      instanceInterfaceMAC,
 	})
 	if err != nil {
 		return fmt.Errorf("failed to attach interfce: %w", err)
@@ -67,8 +69,8 @@ func run() error {
 	// TODO: ipman
 	_, err = client.AddSecurityGroup(ctx, &pb.AddSecurityGroupRequest{
 		Interface:  instanceInterface,
-		IpAddress:  "10.0.0.1",
-		MacAddress: "52:54:00:00:00:01",
+		IpAddress:  "10.192.0.100",
+		MacAddress: instanceInterfaceMAC,
 	})
 	if err != nil {
 		return fmt.Errorf("failed to add security group: %w", err)

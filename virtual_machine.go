@@ -93,6 +93,7 @@ const diskTmplStr = `
 
 const interfaceTmplStr = `
 <interface type='bridge'>
+  <mac address='{{.MacAddress}}'/>
   <source bridge='{{.Bridge}}'/>
   <model type='virtio'/>
   <target dev='{{.Name}}'/>

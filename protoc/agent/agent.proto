@@ -87,6 +87,7 @@ message AttachInterfaceRequest {
   uint32 inbound_average  = 3;
   uint32 outbound_average = 4;
   string name             = 5;
+  string mac_address      = 6;
 }
 
 message StartVirtualMachineRequest {
