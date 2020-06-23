@@ -92,7 +92,7 @@ func makeResponse(intf net.Interface, req dhcp4.Packet, lease *pb.DHCPLease) (*d
 
 	_, netmask, err := net.ParseCIDR(lease.Network)
 	if err != nil {
-		return nil, fmt.Errorf("faield to parse network: %w", err)
+		return nil, fmt.Errorf("failed to parse network: %w", err)
 	}
 
 	resp := &dhcp4.Packet{
