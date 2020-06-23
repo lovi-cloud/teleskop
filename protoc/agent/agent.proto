@@ -35,6 +35,17 @@ service Agent {
       returns (DeleteVLANInterfaceResponse) {}
   rpc DeleteInterfaceFromBridge(DeleteInterfaceFromBridgeRequest)
       returns (DeleteInterfaceFromBridgeResponse) {}
+  rpc DeleteVirtualMachine(DeleteVirtualMachineRequest)
+      returns (DeleteVirtualMachineResponse) {}
+  rpc DisconnectBlockDevice(DisconnectBlockDeviceRequest)
+      returns (DisconnectBlockDeviceResponse) {}
+
+  rpc StopVirtualMachine(StopVirtualMachineRequest)
+      returns (StopVirtualMachineResponse) {}
+  rpc DetachBlockDevice(DetachBlockDeviceRequest)
+      returns (DetachBlockDeviceResponse) {}
+  rpc DetachInterface(DetachInterfaceRequest)
+      returns (DetachInterfaceResponse) {}
 }
 
 message GetISCSIQualifiedNameRequest {}
@@ -108,6 +119,34 @@ message DeleteInterfaceFromBridgeRequest {
   string interface = 2;
 }
 
+message DeleteVirtualMachineRequest {
+  string uuid = 1;
+}
+
+message DisconnectBlockDeviceRequest {
+  repeated string portal_addresses = 1;
+  uint32          host_lun_id      = 2;
+}
+
+message StopVirtualMachineRequest {
+  string uuid = 1;
+}
+
+message DetachBlockDeviceRequest {
+  string uuid          = 1;
+  string source_device = 2;
+  string target_device = 3;
+}
+
+message DetachInterfaceRequest {
+  string uuid             = 1;
+  string bridge           = 2;
+  uint32 inbound_average  = 3;
+  uint32 outbound_average = 4;
+  string name             = 5;
+  string mac_address      = 6;
+}
+
 // response
 message GetISCSIQualifiedNameResponse {
   string iqn = 1;
@@ -154,3 +193,13 @@ message DeleteBridgeResponse {}
 message DeleteVLANInterfaceResponse {}
 
 message DeleteInterfaceFromBridgeResponse {}
+
+message DeleteVirtualMachineResponse {}
+
+message DisconnectBlockDeviceResponse {}
+
+message StopVirtualMachineResponse {}
+
+message DetachBlockDeviceResponse {}
+
+message DetachInterfaceResponse {}

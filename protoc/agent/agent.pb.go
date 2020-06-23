@@ -843,6 +843,305 @@ func (x *DeleteInterfaceFromBridgeRequest) GetInterface() string {
 	return ""
 }
 
+type DeleteVirtualMachineRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Uuid string `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
+}
+
+func (x *DeleteVirtualMachineRequest) Reset() {
+	*x = DeleteVirtualMachineRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_agent_proto_msgTypes[15]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteVirtualMachineRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteVirtualMachineRequest) ProtoMessage() {}
+
+func (x *DeleteVirtualMachineRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_agent_proto_msgTypes[15]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteVirtualMachineRequest.ProtoReflect.Descriptor instead.
+func (*DeleteVirtualMachineRequest) Descriptor() ([]byte, []int) {
+	return file_agent_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *DeleteVirtualMachineRequest) GetUuid() string {
+	if x != nil {
+		return x.Uuid
+	}
+	return ""
+}
+
+type DisconnectBlockDeviceRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	PortalAddresses []string `protobuf:"bytes,1,rep,name=portal_addresses,json=portalAddresses,proto3" json:"portal_addresses,omitempty"`
+	HostLunId       uint32   `protobuf:"varint,2,opt,name=host_lun_id,json=hostLunId,proto3" json:"host_lun_id,omitempty"`
+}
+
+func (x *DisconnectBlockDeviceRequest) Reset() {
+	*x = DisconnectBlockDeviceRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_agent_proto_msgTypes[16]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DisconnectBlockDeviceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DisconnectBlockDeviceRequest) ProtoMessage() {}
+
+func (x *DisconnectBlockDeviceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_agent_proto_msgTypes[16]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DisconnectBlockDeviceRequest.ProtoReflect.Descriptor instead.
+func (*DisconnectBlockDeviceRequest) Descriptor() ([]byte, []int) {
+	return file_agent_proto_rawDescGZIP(), []int{16}
+}
+
+func (x *DisconnectBlockDeviceRequest) GetPortalAddresses() []string {
+	if x != nil {
+		return x.PortalAddresses
+	}
+	return nil
+}
+
+func (x *DisconnectBlockDeviceRequest) GetHostLunId() uint32 {
+	if x != nil {
+		return x.HostLunId
+	}
+	return 0
+}
+
+type StopVirtualMachineRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Uuid string `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
+}
+
+func (x *StopVirtualMachineRequest) Reset() {
+	*x = StopVirtualMachineRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_agent_proto_msgTypes[17]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *StopVirtualMachineRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StopVirtualMachineRequest) ProtoMessage() {}
+
+func (x *StopVirtualMachineRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_agent_proto_msgTypes[17]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StopVirtualMachineRequest.ProtoReflect.Descriptor instead.
+func (*StopVirtualMachineRequest) Descriptor() ([]byte, []int) {
+	return file_agent_proto_rawDescGZIP(), []int{17}
+}
+
+func (x *StopVirtualMachineRequest) GetUuid() string {
+	if x != nil {
+		return x.Uuid
+	}
+	return ""
+}
+
+type DetachBlockDeviceRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Uuid         string `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
+	SourceDevice string `protobuf:"bytes,2,opt,name=source_device,json=sourceDevice,proto3" json:"source_device,omitempty"`
+	TargetDevice string `protobuf:"bytes,3,opt,name=target_device,json=targetDevice,proto3" json:"target_device,omitempty"`
+}
+
+func (x *DetachBlockDeviceRequest) Reset() {
+	*x = DetachBlockDeviceRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_agent_proto_msgTypes[18]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DetachBlockDeviceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DetachBlockDeviceRequest) ProtoMessage() {}
+
+func (x *DetachBlockDeviceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_agent_proto_msgTypes[18]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DetachBlockDeviceRequest.ProtoReflect.Descriptor instead.
+func (*DetachBlockDeviceRequest) Descriptor() ([]byte, []int) {
+	return file_agent_proto_rawDescGZIP(), []int{18}
+}
+
+func (x *DetachBlockDeviceRequest) GetUuid() string {
+	if x != nil {
+		return x.Uuid
+	}
+	return ""
+}
+
+func (x *DetachBlockDeviceRequest) GetSourceDevice() string {
+	if x != nil {
+		return x.SourceDevice
+	}
+	return ""
+}
+
+func (x *DetachBlockDeviceRequest) GetTargetDevice() string {
+	if x != nil {
+		return x.TargetDevice
+	}
+	return ""
+}
+
+type DetachInterfaceRequest struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+
+	Uuid            string `protobuf:"bytes,1,opt,name=uuid,proto3" json:"uuid,omitempty"`
+	Bridge          string `protobuf:"bytes,2,opt,name=bridge,proto3" json:"bridge,omitempty"`
+	InboundAverage  uint32 `protobuf:"varint,3,opt,name=inbound_average,json=inboundAverage,proto3" json:"inbound_average,omitempty"`
+	OutboundAverage uint32 `protobuf:"varint,4,opt,name=outbound_average,json=outboundAverage,proto3" json:"outbound_average,omitempty"`
+	Name            string `protobuf:"bytes,5,opt,name=name,proto3" json:"name,omitempty"`
+	MacAddress      string `protobuf:"bytes,6,opt,name=mac_address,json=macAddress,proto3" json:"mac_address,omitempty"`
+}
+
+func (x *DetachInterfaceRequest) Reset() {
+	*x = DetachInterfaceRequest{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_agent_proto_msgTypes[19]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DetachInterfaceRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DetachInterfaceRequest) ProtoMessage() {}
+
+func (x *DetachInterfaceRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_agent_proto_msgTypes[19]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DetachInterfaceRequest.ProtoReflect.Descriptor instead.
+func (*DetachInterfaceRequest) Descriptor() ([]byte, []int) {
+	return file_agent_proto_rawDescGZIP(), []int{19}
+}
+
+func (x *DetachInterfaceRequest) GetUuid() string {
+	if x != nil {
+		return x.Uuid
+	}
+	return ""
+}
+
+func (x *DetachInterfaceRequest) GetBridge() string {
+	if x != nil {
+		return x.Bridge
+	}
+	return ""
+}
+
+func (x *DetachInterfaceRequest) GetInboundAverage() uint32 {
+	if x != nil {
+		return x.InboundAverage
+	}
+	return 0
+}
+
+func (x *DetachInterfaceRequest) GetOutboundAverage() uint32 {
+	if x != nil {
+		return x.OutboundAverage
+	}
+	return 0
+}
+
+func (x *DetachInterfaceRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *DetachInterfaceRequest) GetMacAddress() string {
+	if x != nil {
+		return x.MacAddress
+	}
+	return ""
+}
+
 // response
 type GetISCSIQualifiedNameResponse struct {
 	state         protoimpl.MessageState
@@ -855,7 +1154,7 @@ type GetISCSIQualifiedNameResponse struct {
 func (x *GetISCSIQualifiedNameResponse) Reset() {
 	*x = GetISCSIQualifiedNameResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_agent_proto_msgTypes[15]
+		mi := &file_agent_proto_msgTypes[20]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -868,7 +1167,7 @@ func (x *GetISCSIQualifiedNameResponse) String() string {
 func (*GetISCSIQualifiedNameResponse) ProtoMessage() {}
 
 func (x *GetISCSIQualifiedNameResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_proto_msgTypes[15]
+	mi := &file_agent_proto_msgTypes[20]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -881,7 +1180,7 @@ func (x *GetISCSIQualifiedNameResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetISCSIQualifiedNameResponse.ProtoReflect.Descriptor instead.
 func (*GetISCSIQualifiedNameResponse) Descriptor() ([]byte, []int) {
-	return file_agent_proto_rawDescGZIP(), []int{15}
+	return file_agent_proto_rawDescGZIP(), []int{20}
 }
 
 func (x *GetISCSIQualifiedNameResponse) GetIqn() string {
@@ -900,7 +1199,7 @@ type GetIPTablesResponse struct {
 func (x *GetIPTablesResponse) Reset() {
 	*x = GetIPTablesResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_agent_proto_msgTypes[16]
+		mi := &file_agent_proto_msgTypes[21]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -913,7 +1212,7 @@ func (x *GetIPTablesResponse) String() string {
 func (*GetIPTablesResponse) ProtoMessage() {}
 
 func (x *GetIPTablesResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_proto_msgTypes[16]
+	mi := &file_agent_proto_msgTypes[21]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -926,7 +1225,7 @@ func (x *GetIPTablesResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetIPTablesResponse.ProtoReflect.Descriptor instead.
 func (*GetIPTablesResponse) Descriptor() ([]byte, []int) {
-	return file_agent_proto_rawDescGZIP(), []int{16}
+	return file_agent_proto_rawDescGZIP(), []int{21}
 }
 
 type SetupDefaultSecurityGroupResponse struct {
@@ -938,7 +1237,7 @@ type SetupDefaultSecurityGroupResponse struct {
 func (x *SetupDefaultSecurityGroupResponse) Reset() {
 	*x = SetupDefaultSecurityGroupResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_agent_proto_msgTypes[17]
+		mi := &file_agent_proto_msgTypes[22]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -951,7 +1250,7 @@ func (x *SetupDefaultSecurityGroupResponse) String() string {
 func (*SetupDefaultSecurityGroupResponse) ProtoMessage() {}
 
 func (x *SetupDefaultSecurityGroupResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_proto_msgTypes[17]
+	mi := &file_agent_proto_msgTypes[22]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -964,7 +1263,7 @@ func (x *SetupDefaultSecurityGroupResponse) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use SetupDefaultSecurityGroupResponse.ProtoReflect.Descriptor instead.
 func (*SetupDefaultSecurityGroupResponse) Descriptor() ([]byte, []int) {
-	return file_agent_proto_rawDescGZIP(), []int{17}
+	return file_agent_proto_rawDescGZIP(), []int{22}
 }
 
 type AddSecurityGroupResponse struct {
@@ -976,7 +1275,7 @@ type AddSecurityGroupResponse struct {
 func (x *AddSecurityGroupResponse) Reset() {
 	*x = AddSecurityGroupResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_agent_proto_msgTypes[18]
+		mi := &file_agent_proto_msgTypes[23]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -989,7 +1288,7 @@ func (x *AddSecurityGroupResponse) String() string {
 func (*AddSecurityGroupResponse) ProtoMessage() {}
 
 func (x *AddSecurityGroupResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_proto_msgTypes[18]
+	mi := &file_agent_proto_msgTypes[23]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1002,7 +1301,7 @@ func (x *AddSecurityGroupResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddSecurityGroupResponse.ProtoReflect.Descriptor instead.
 func (*AddSecurityGroupResponse) Descriptor() ([]byte, []int) {
-	return file_agent_proto_rawDescGZIP(), []int{18}
+	return file_agent_proto_rawDescGZIP(), []int{23}
 }
 
 type AddBridgeResponse struct {
@@ -1014,7 +1313,7 @@ type AddBridgeResponse struct {
 func (x *AddBridgeResponse) Reset() {
 	*x = AddBridgeResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_agent_proto_msgTypes[19]
+		mi := &file_agent_proto_msgTypes[24]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1027,7 +1326,7 @@ func (x *AddBridgeResponse) String() string {
 func (*AddBridgeResponse) ProtoMessage() {}
 
 func (x *AddBridgeResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_proto_msgTypes[19]
+	mi := &file_agent_proto_msgTypes[24]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1040,7 +1339,7 @@ func (x *AddBridgeResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddBridgeResponse.ProtoReflect.Descriptor instead.
 func (*AddBridgeResponse) Descriptor() ([]byte, []int) {
-	return file_agent_proto_rawDescGZIP(), []int{19}
+	return file_agent_proto_rawDescGZIP(), []int{24}
 }
 
 type AddVLANInterfaceResponse struct {
@@ -1052,7 +1351,7 @@ type AddVLANInterfaceResponse struct {
 func (x *AddVLANInterfaceResponse) Reset() {
 	*x = AddVLANInterfaceResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_agent_proto_msgTypes[20]
+		mi := &file_agent_proto_msgTypes[25]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1065,7 +1364,7 @@ func (x *AddVLANInterfaceResponse) String() string {
 func (*AddVLANInterfaceResponse) ProtoMessage() {}
 
 func (x *AddVLANInterfaceResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_proto_msgTypes[20]
+	mi := &file_agent_proto_msgTypes[25]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1078,7 +1377,7 @@ func (x *AddVLANInterfaceResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddVLANInterfaceResponse.ProtoReflect.Descriptor instead.
 func (*AddVLANInterfaceResponse) Descriptor() ([]byte, []int) {
-	return file_agent_proto_rawDescGZIP(), []int{20}
+	return file_agent_proto_rawDescGZIP(), []int{25}
 }
 
 type AddInterfaceToBridgeResponse struct {
@@ -1090,7 +1389,7 @@ type AddInterfaceToBridgeResponse struct {
 func (x *AddInterfaceToBridgeResponse) Reset() {
 	*x = AddInterfaceToBridgeResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_agent_proto_msgTypes[21]
+		mi := &file_agent_proto_msgTypes[26]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1103,7 +1402,7 @@ func (x *AddInterfaceToBridgeResponse) String() string {
 func (*AddInterfaceToBridgeResponse) ProtoMessage() {}
 
 func (x *AddInterfaceToBridgeResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_proto_msgTypes[21]
+	mi := &file_agent_proto_msgTypes[26]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1116,7 +1415,7 @@ func (x *AddInterfaceToBridgeResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddInterfaceToBridgeResponse.ProtoReflect.Descriptor instead.
 func (*AddInterfaceToBridgeResponse) Descriptor() ([]byte, []int) {
-	return file_agent_proto_rawDescGZIP(), []int{21}
+	return file_agent_proto_rawDescGZIP(), []int{26}
 }
 
 type AddVirtualMachineResponse struct {
@@ -1131,7 +1430,7 @@ type AddVirtualMachineResponse struct {
 func (x *AddVirtualMachineResponse) Reset() {
 	*x = AddVirtualMachineResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_agent_proto_msgTypes[22]
+		mi := &file_agent_proto_msgTypes[27]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1144,7 +1443,7 @@ func (x *AddVirtualMachineResponse) String() string {
 func (*AddVirtualMachineResponse) ProtoMessage() {}
 
 func (x *AddVirtualMachineResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_proto_msgTypes[22]
+	mi := &file_agent_proto_msgTypes[27]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1157,7 +1456,7 @@ func (x *AddVirtualMachineResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AddVirtualMachineResponse.ProtoReflect.Descriptor instead.
 func (*AddVirtualMachineResponse) Descriptor() ([]byte, []int) {
-	return file_agent_proto_rawDescGZIP(), []int{22}
+	return file_agent_proto_rawDescGZIP(), []int{27}
 }
 
 func (x *AddVirtualMachineResponse) GetUuid() string {
@@ -1185,7 +1484,7 @@ type ConnectBlockDeviceResponse struct {
 func (x *ConnectBlockDeviceResponse) Reset() {
 	*x = ConnectBlockDeviceResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_agent_proto_msgTypes[23]
+		mi := &file_agent_proto_msgTypes[28]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1198,7 +1497,7 @@ func (x *ConnectBlockDeviceResponse) String() string {
 func (*ConnectBlockDeviceResponse) ProtoMessage() {}
 
 func (x *ConnectBlockDeviceResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_proto_msgTypes[23]
+	mi := &file_agent_proto_msgTypes[28]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1211,7 +1510,7 @@ func (x *ConnectBlockDeviceResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ConnectBlockDeviceResponse.ProtoReflect.Descriptor instead.
 func (*ConnectBlockDeviceResponse) Descriptor() ([]byte, []int) {
-	return file_agent_proto_rawDescGZIP(), []int{23}
+	return file_agent_proto_rawDescGZIP(), []int{28}
 }
 
 func (x *ConnectBlockDeviceResponse) GetDeviceName() string {
@@ -1233,7 +1532,7 @@ type StartVirtualMachineResponse struct {
 func (x *StartVirtualMachineResponse) Reset() {
 	*x = StartVirtualMachineResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_agent_proto_msgTypes[24]
+		mi := &file_agent_proto_msgTypes[29]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1246,7 +1545,7 @@ func (x *StartVirtualMachineResponse) String() string {
 func (*StartVirtualMachineResponse) ProtoMessage() {}
 
 func (x *StartVirtualMachineResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_proto_msgTypes[24]
+	mi := &file_agent_proto_msgTypes[29]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1259,7 +1558,7 @@ func (x *StartVirtualMachineResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use StartVirtualMachineResponse.ProtoReflect.Descriptor instead.
 func (*StartVirtualMachineResponse) Descriptor() ([]byte, []int) {
-	return file_agent_proto_rawDescGZIP(), []int{24}
+	return file_agent_proto_rawDescGZIP(), []int{29}
 }
 
 func (x *StartVirtualMachineResponse) GetUuid() string {
@@ -1288,7 +1587,7 @@ type AttachBlockDeviceResponse struct {
 func (x *AttachBlockDeviceResponse) Reset() {
 	*x = AttachBlockDeviceResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_agent_proto_msgTypes[25]
+		mi := &file_agent_proto_msgTypes[30]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1301,7 +1600,7 @@ func (x *AttachBlockDeviceResponse) String() string {
 func (*AttachBlockDeviceResponse) ProtoMessage() {}
 
 func (x *AttachBlockDeviceResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_proto_msgTypes[25]
+	mi := &file_agent_proto_msgTypes[30]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1314,7 +1613,7 @@ func (x *AttachBlockDeviceResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AttachBlockDeviceResponse.ProtoReflect.Descriptor instead.
 func (*AttachBlockDeviceResponse) Descriptor() ([]byte, []int) {
-	return file_agent_proto_rawDescGZIP(), []int{25}
+	return file_agent_proto_rawDescGZIP(), []int{30}
 }
 
 func (x *AttachBlockDeviceResponse) GetUuid() string {
@@ -1343,7 +1642,7 @@ type AttachInterfaceResponse struct {
 func (x *AttachInterfaceResponse) Reset() {
 	*x = AttachInterfaceResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_agent_proto_msgTypes[26]
+		mi := &file_agent_proto_msgTypes[31]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1356,7 +1655,7 @@ func (x *AttachInterfaceResponse) String() string {
 func (*AttachInterfaceResponse) ProtoMessage() {}
 
 func (x *AttachInterfaceResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_proto_msgTypes[26]
+	mi := &file_agent_proto_msgTypes[31]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1369,7 +1668,7 @@ func (x *AttachInterfaceResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use AttachInterfaceResponse.ProtoReflect.Descriptor instead.
 func (*AttachInterfaceResponse) Descriptor() ([]byte, []int) {
-	return file_agent_proto_rawDescGZIP(), []int{26}
+	return file_agent_proto_rawDescGZIP(), []int{31}
 }
 
 func (x *AttachInterfaceResponse) GetUuid() string {
@@ -1395,7 +1694,7 @@ type DeleteBridgeResponse struct {
 func (x *DeleteBridgeResponse) Reset() {
 	*x = DeleteBridgeResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_agent_proto_msgTypes[27]
+		mi := &file_agent_proto_msgTypes[32]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1408,7 +1707,7 @@ func (x *DeleteBridgeResponse) String() string {
 func (*DeleteBridgeResponse) ProtoMessage() {}
 
 func (x *DeleteBridgeResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_proto_msgTypes[27]
+	mi := &file_agent_proto_msgTypes[32]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1421,7 +1720,7 @@ func (x *DeleteBridgeResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteBridgeResponse.ProtoReflect.Descriptor instead.
 func (*DeleteBridgeResponse) Descriptor() ([]byte, []int) {
-	return file_agent_proto_rawDescGZIP(), []int{27}
+	return file_agent_proto_rawDescGZIP(), []int{32}
 }
 
 type DeleteVLANInterfaceResponse struct {
@@ -1433,7 +1732,7 @@ type DeleteVLANInterfaceResponse struct {
 func (x *DeleteVLANInterfaceResponse) Reset() {
 	*x = DeleteVLANInterfaceResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_agent_proto_msgTypes[28]
+		mi := &file_agent_proto_msgTypes[33]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1446,7 +1745,7 @@ func (x *DeleteVLANInterfaceResponse) String() string {
 func (*DeleteVLANInterfaceResponse) ProtoMessage() {}
 
 func (x *DeleteVLANInterfaceResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_proto_msgTypes[28]
+	mi := &file_agent_proto_msgTypes[33]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1459,7 +1758,7 @@ func (x *DeleteVLANInterfaceResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use DeleteVLANInterfaceResponse.ProtoReflect.Descriptor instead.
 func (*DeleteVLANInterfaceResponse) Descriptor() ([]byte, []int) {
-	return file_agent_proto_rawDescGZIP(), []int{28}
+	return file_agent_proto_rawDescGZIP(), []int{33}
 }
 
 type DeleteInterfaceFromBridgeResponse struct {
@@ -1471,7 +1770,7 @@ type DeleteInterfaceFromBridgeResponse struct {
 func (x *DeleteInterfaceFromBridgeResponse) Reset() {
 	*x = DeleteInterfaceFromBridgeResponse{}
 	if protoimpl.UnsafeEnabled {
-		mi := &file_agent_proto_msgTypes[29]
+		mi := &file_agent_proto_msgTypes[34]
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		ms.StoreMessageInfo(mi)
 	}
@@ -1484,7 +1783,7 @@ func (x *DeleteInterfaceFromBridgeResponse) String() string {
 func (*DeleteInterfaceFromBridgeResponse) ProtoMessage() {}
 
 func (x *DeleteInterfaceFromBridgeResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_agent_proto_msgTypes[29]
+	mi := &file_agent_proto_msgTypes[34]
 	if protoimpl.UnsafeEnabled && x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -1497,7 +1796,197 @@ func (x *DeleteInterfaceFromBridgeResponse) ProtoReflect() protoreflect.Message 
 
 // Deprecated: Use DeleteInterfaceFromBridgeResponse.ProtoReflect.Descriptor instead.
 func (*DeleteInterfaceFromBridgeResponse) Descriptor() ([]byte, []int) {
-	return file_agent_proto_rawDescGZIP(), []int{29}
+	return file_agent_proto_rawDescGZIP(), []int{34}
+}
+
+type DeleteVirtualMachineResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *DeleteVirtualMachineResponse) Reset() {
+	*x = DeleteVirtualMachineResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_agent_proto_msgTypes[35]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DeleteVirtualMachineResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteVirtualMachineResponse) ProtoMessage() {}
+
+func (x *DeleteVirtualMachineResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_agent_proto_msgTypes[35]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteVirtualMachineResponse.ProtoReflect.Descriptor instead.
+func (*DeleteVirtualMachineResponse) Descriptor() ([]byte, []int) {
+	return file_agent_proto_rawDescGZIP(), []int{35}
+}
+
+type DisconnectBlockDeviceResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *DisconnectBlockDeviceResponse) Reset() {
+	*x = DisconnectBlockDeviceResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_agent_proto_msgTypes[36]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DisconnectBlockDeviceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DisconnectBlockDeviceResponse) ProtoMessage() {}
+
+func (x *DisconnectBlockDeviceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_agent_proto_msgTypes[36]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DisconnectBlockDeviceResponse.ProtoReflect.Descriptor instead.
+func (*DisconnectBlockDeviceResponse) Descriptor() ([]byte, []int) {
+	return file_agent_proto_rawDescGZIP(), []int{36}
+}
+
+type StopVirtualMachineResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *StopVirtualMachineResponse) Reset() {
+	*x = StopVirtualMachineResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_agent_proto_msgTypes[37]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *StopVirtualMachineResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*StopVirtualMachineResponse) ProtoMessage() {}
+
+func (x *StopVirtualMachineResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_agent_proto_msgTypes[37]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use StopVirtualMachineResponse.ProtoReflect.Descriptor instead.
+func (*StopVirtualMachineResponse) Descriptor() ([]byte, []int) {
+	return file_agent_proto_rawDescGZIP(), []int{37}
+}
+
+type DetachBlockDeviceResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *DetachBlockDeviceResponse) Reset() {
+	*x = DetachBlockDeviceResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_agent_proto_msgTypes[38]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DetachBlockDeviceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DetachBlockDeviceResponse) ProtoMessage() {}
+
+func (x *DetachBlockDeviceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_agent_proto_msgTypes[38]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DetachBlockDeviceResponse.ProtoReflect.Descriptor instead.
+func (*DetachBlockDeviceResponse) Descriptor() ([]byte, []int) {
+	return file_agent_proto_rawDescGZIP(), []int{38}
+}
+
+type DetachInterfaceResponse struct {
+	state         protoimpl.MessageState
+	sizeCache     protoimpl.SizeCache
+	unknownFields protoimpl.UnknownFields
+}
+
+func (x *DetachInterfaceResponse) Reset() {
+	*x = DetachInterfaceResponse{}
+	if protoimpl.UnsafeEnabled {
+		mi := &file_agent_proto_msgTypes[39]
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		ms.StoreMessageInfo(mi)
+	}
+}
+
+func (x *DetachInterfaceResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DetachInterfaceResponse) ProtoMessage() {}
+
+func (x *DetachInterfaceResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_agent_proto_msgTypes[39]
+	if protoimpl.UnsafeEnabled && x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DetachInterfaceResponse.ProtoReflect.Descriptor instead.
+func (*DetachInterfaceResponse) Descriptor() ([]byte, []int) {
+	return file_agent_proto_rawDescGZIP(), []int{39}
 }
 
 var File_agent_proto protoreflect.FileDescriptor
@@ -1584,48 +2073,91 @@ var file_agent_proto_rawDesc = []byte{
 	0x16, 0x0a, 0x06, 0x62, 0x72, 0x69, 0x64, 0x67, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52,
 	0x06, 0x62, 0x72, 0x69, 0x64, 0x67, 0x65, 0x12, 0x1c, 0x0a, 0x09, 0x69, 0x6e, 0x74, 0x65, 0x72,
 	0x66, 0x61, 0x63, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x09, 0x69, 0x6e, 0x74, 0x65,
-	0x72, 0x66, 0x61, 0x63, 0x65, 0x22, 0x31, 0x0a, 0x1d, 0x47, 0x65, 0x74, 0x49, 0x53, 0x43, 0x53,
-	0x49, 0x51, 0x75, 0x61, 0x6c, 0x69, 0x66, 0x69, 0x65, 0x64, 0x4e, 0x61, 0x6d, 0x65, 0x52, 0x65,
-	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x10, 0x0a, 0x03, 0x69, 0x71, 0x6e, 0x18, 0x01, 0x20,
-	0x01, 0x28, 0x09, 0x52, 0x03, 0x69, 0x71, 0x6e, 0x22, 0x15, 0x0a, 0x13, 0x47, 0x65, 0x74, 0x49,
-	0x50, 0x54, 0x61, 0x62, 0x6c, 0x65, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22,
-	0x23, 0x0a, 0x21, 0x53, 0x65, 0x74, 0x75, 0x70, 0x44, 0x65, 0x66, 0x61, 0x75, 0x6c, 0x74, 0x53,
-	0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x22, 0x1a, 0x0a, 0x18, 0x41, 0x64, 0x64, 0x53, 0x65, 0x63, 0x75, 0x72,
-	0x69, 0x74, 0x79, 0x47, 0x72, 0x6f, 0x75, 0x70, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
-	0x22, 0x13, 0x0a, 0x11, 0x41, 0x64, 0x64, 0x42, 0x72, 0x69, 0x64, 0x67, 0x65, 0x52, 0x65, 0x73,
-	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x1a, 0x0a, 0x18, 0x41, 0x64, 0x64, 0x56, 0x4c, 0x41, 0x4e,
-	0x49, 0x6e, 0x74, 0x65, 0x72, 0x66, 0x61, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x22, 0x1e, 0x0a, 0x1c, 0x41, 0x64, 0x64, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x66, 0x61, 0x63,
-	0x65, 0x54, 0x6f, 0x42, 0x72, 0x69, 0x64, 0x67, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
-	0x65, 0x22, 0x43, 0x0a, 0x19, 0x41, 0x64, 0x64, 0x56, 0x69, 0x72, 0x74, 0x75, 0x61, 0x6c, 0x4d,
-	0x61, 0x63, 0x68, 0x69, 0x6e, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x12,
-	0x0a, 0x04, 0x75, 0x75, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x75, 0x75,
-	0x69, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09,
-	0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x22, 0x3d, 0x0a, 0x1a, 0x43, 0x6f, 0x6e, 0x6e, 0x65, 0x63,
-	0x74, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x1f, 0x0a, 0x0b, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x5f, 0x6e,
-	0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0a, 0x64, 0x65, 0x76, 0x69, 0x63,
-	0x65, 0x4e, 0x61, 0x6d, 0x65, 0x22, 0x45, 0x0a, 0x1b, 0x53, 0x74, 0x61, 0x72, 0x74, 0x56, 0x69,
-	0x72, 0x74, 0x75, 0x61, 0x6c, 0x4d, 0x61, 0x63, 0x68, 0x69, 0x6e, 0x65, 0x52, 0x65, 0x73, 0x70,
-	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x75, 0x75, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x09, 0x52, 0x04, 0x75, 0x75, 0x69, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65,
-	0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x22, 0x43, 0x0a, 0x19,
-	0x41, 0x74, 0x74, 0x61, 0x63, 0x68, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x44, 0x65, 0x76, 0x69, 0x63,
-	0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x75, 0x75, 0x69,
-	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x75, 0x75, 0x69, 0x64, 0x12, 0x12, 0x0a,
-	0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d,
-	0x65, 0x22, 0x41, 0x0a, 0x17, 0x41, 0x74, 0x74, 0x61, 0x63, 0x68, 0x49, 0x6e, 0x74, 0x65, 0x72,
-	0x66, 0x61, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x12, 0x0a, 0x04,
-	0x75, 0x75, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x75, 0x75, 0x69, 0x64,
-	0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04,
-	0x6e, 0x61, 0x6d, 0x65, 0x22, 0x16, 0x0a, 0x14, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x42, 0x72,
-	0x69, 0x64, 0x67, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x1d, 0x0a, 0x1b,
-	0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x56, 0x4c, 0x41, 0x4e, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x66,
-	0x61, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x23, 0x0a, 0x21, 0x44,
-	0x65, 0x6c, 0x65, 0x74, 0x65, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x66, 0x61, 0x63, 0x65, 0x46, 0x72,
-	0x6f, 0x6d, 0x42, 0x72, 0x69, 0x64, 0x67, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
-	0x32, 0xdc, 0x0a, 0x0a, 0x05, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x12, 0x64, 0x0a, 0x15, 0x47, 0x65,
+	0x72, 0x66, 0x61, 0x63, 0x65, 0x22, 0x31, 0x0a, 0x1b, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x56,
+	0x69, 0x72, 0x74, 0x75, 0x61, 0x6c, 0x4d, 0x61, 0x63, 0x68, 0x69, 0x6e, 0x65, 0x52, 0x65, 0x71,
+	0x75, 0x65, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x75, 0x75, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x04, 0x75, 0x75, 0x69, 0x64, 0x22, 0x69, 0x0a, 0x1c, 0x44, 0x69, 0x73, 0x63,
+	0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x44, 0x65, 0x76, 0x69, 0x63,
+	0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x29, 0x0a, 0x10, 0x70, 0x6f, 0x72, 0x74,
+	0x61, 0x6c, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x65, 0x73, 0x18, 0x01, 0x20, 0x03,
+	0x28, 0x09, 0x52, 0x0f, 0x70, 0x6f, 0x72, 0x74, 0x61, 0x6c, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73,
+	0x73, 0x65, 0x73, 0x12, 0x1e, 0x0a, 0x0b, 0x68, 0x6f, 0x73, 0x74, 0x5f, 0x6c, 0x75, 0x6e, 0x5f,
+	0x69, 0x64, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x09, 0x68, 0x6f, 0x73, 0x74, 0x4c, 0x75,
+	0x6e, 0x49, 0x64, 0x22, 0x2f, 0x0a, 0x19, 0x53, 0x74, 0x6f, 0x70, 0x56, 0x69, 0x72, 0x74, 0x75,
+	0x61, 0x6c, 0x4d, 0x61, 0x63, 0x68, 0x69, 0x6e, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x12, 0x12, 0x0a, 0x04, 0x75, 0x75, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04,
+	0x75, 0x75, 0x69, 0x64, 0x22, 0x78, 0x0a, 0x18, 0x44, 0x65, 0x74, 0x61, 0x63, 0x68, 0x42, 0x6c,
+	0x6f, 0x63, 0x6b, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x12, 0x12, 0x0a, 0x04, 0x75, 0x75, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04,
+	0x75, 0x75, 0x69, 0x64, 0x12, 0x23, 0x0a, 0x0d, 0x73, 0x6f, 0x75, 0x72, 0x63, 0x65, 0x5f, 0x64,
+	0x65, 0x76, 0x69, 0x63, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x0c, 0x73, 0x6f, 0x75,
+	0x72, 0x63, 0x65, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x12, 0x23, 0x0a, 0x0d, 0x74, 0x61, 0x72,
+	0x67, 0x65, 0x74, 0x5f, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x0c, 0x74, 0x61, 0x72, 0x67, 0x65, 0x74, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x22, 0xcd,
+	0x01, 0x0a, 0x16, 0x44, 0x65, 0x74, 0x61, 0x63, 0x68, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x66, 0x61,
+	0x63, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x12, 0x0a, 0x04, 0x75, 0x75, 0x69,
+	0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x75, 0x75, 0x69, 0x64, 0x12, 0x16, 0x0a,
+	0x06, 0x62, 0x72, 0x69, 0x64, 0x67, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x06, 0x62,
+	0x72, 0x69, 0x64, 0x67, 0x65, 0x12, 0x27, 0x0a, 0x0f, 0x69, 0x6e, 0x62, 0x6f, 0x75, 0x6e, 0x64,
+	0x5f, 0x61, 0x76, 0x65, 0x72, 0x61, 0x67, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x0e,
+	0x69, 0x6e, 0x62, 0x6f, 0x75, 0x6e, 0x64, 0x41, 0x76, 0x65, 0x72, 0x61, 0x67, 0x65, 0x12, 0x29,
+	0x0a, 0x10, 0x6f, 0x75, 0x74, 0x62, 0x6f, 0x75, 0x6e, 0x64, 0x5f, 0x61, 0x76, 0x65, 0x72, 0x61,
+	0x67, 0x65, 0x18, 0x04, 0x20, 0x01, 0x28, 0x0d, 0x52, 0x0f, 0x6f, 0x75, 0x74, 0x62, 0x6f, 0x75,
+	0x6e, 0x64, 0x41, 0x76, 0x65, 0x72, 0x61, 0x67, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d,
+	0x65, 0x18, 0x05, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x12, 0x1f, 0x0a,
+	0x0b, 0x6d, 0x61, 0x63, 0x5f, 0x61, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x18, 0x06, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x0a, 0x6d, 0x61, 0x63, 0x41, 0x64, 0x64, 0x72, 0x65, 0x73, 0x73, 0x22, 0x31,
+	0x0a, 0x1d, 0x47, 0x65, 0x74, 0x49, 0x53, 0x43, 0x53, 0x49, 0x51, 0x75, 0x61, 0x6c, 0x69, 0x66,
+	0x69, 0x65, 0x64, 0x4e, 0x61, 0x6d, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12,
+	0x10, 0x0a, 0x03, 0x69, 0x71, 0x6e, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x03, 0x69, 0x71,
+	0x6e, 0x22, 0x15, 0x0a, 0x13, 0x47, 0x65, 0x74, 0x49, 0x50, 0x54, 0x61, 0x62, 0x6c, 0x65, 0x73,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x23, 0x0a, 0x21, 0x53, 0x65, 0x74, 0x75,
+	0x70, 0x44, 0x65, 0x66, 0x61, 0x75, 0x6c, 0x74, 0x53, 0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79,
+	0x47, 0x72, 0x6f, 0x75, 0x70, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x1a, 0x0a,
+	0x18, 0x41, 0x64, 0x64, 0x53, 0x65, 0x63, 0x75, 0x72, 0x69, 0x74, 0x79, 0x47, 0x72, 0x6f, 0x75,
+	0x70, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x13, 0x0a, 0x11, 0x41, 0x64, 0x64,
+	0x42, 0x72, 0x69, 0x64, 0x67, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x1a,
+	0x0a, 0x18, 0x41, 0x64, 0x64, 0x56, 0x4c, 0x41, 0x4e, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x66, 0x61,
+	0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x1e, 0x0a, 0x1c, 0x41, 0x64,
+	0x64, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x66, 0x61, 0x63, 0x65, 0x54, 0x6f, 0x42, 0x72, 0x69, 0x64,
+	0x67, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x43, 0x0a, 0x19, 0x41, 0x64,
+	0x64, 0x56, 0x69, 0x72, 0x74, 0x75, 0x61, 0x6c, 0x4d, 0x61, 0x63, 0x68, 0x69, 0x6e, 0x65, 0x52,
+	0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x75, 0x75, 0x69, 0x64, 0x18,
+	0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x75, 0x75, 0x69, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x6e,
+	0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x22,
+	0x3d, 0x0a, 0x1a, 0x43, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x44,
+	0x65, 0x76, 0x69, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x1f, 0x0a,
+	0x0b, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x5f, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x01, 0x20, 0x01,
+	0x28, 0x09, 0x52, 0x0a, 0x64, 0x65, 0x76, 0x69, 0x63, 0x65, 0x4e, 0x61, 0x6d, 0x65, 0x22, 0x45,
+	0x0a, 0x1b, 0x53, 0x74, 0x61, 0x72, 0x74, 0x56, 0x69, 0x72, 0x74, 0x75, 0x61, 0x6c, 0x4d, 0x61,
+	0x63, 0x68, 0x69, 0x6e, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x12, 0x0a,
+	0x04, 0x75, 0x75, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x75, 0x75, 0x69,
+	0x64, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52,
+	0x04, 0x6e, 0x61, 0x6d, 0x65, 0x22, 0x43, 0x0a, 0x19, 0x41, 0x74, 0x74, 0x61, 0x63, 0x68, 0x42,
+	0x6c, 0x6f, 0x63, 0x6b, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e,
+	0x73, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x75, 0x75, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
+	0x52, 0x04, 0x75, 0x75, 0x69, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02,
+	0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x22, 0x41, 0x0a, 0x17, 0x41, 0x74,
+	0x74, 0x61, 0x63, 0x68, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x66, 0x61, 0x63, 0x65, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x12, 0x0a, 0x04, 0x75, 0x75, 0x69, 0x64, 0x18, 0x01, 0x20,
+	0x01, 0x28, 0x09, 0x52, 0x04, 0x75, 0x75, 0x69, 0x64, 0x12, 0x12, 0x0a, 0x04, 0x6e, 0x61, 0x6d,
+	0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x22, 0x16, 0x0a,
+	0x14, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x42, 0x72, 0x69, 0x64, 0x67, 0x65, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x1d, 0x0a, 0x1b, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x56,
+	0x4c, 0x41, 0x4e, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x66, 0x61, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70,
+	0x6f, 0x6e, 0x73, 0x65, 0x22, 0x23, 0x0a, 0x21, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x49, 0x6e,
+	0x74, 0x65, 0x72, 0x66, 0x61, 0x63, 0x65, 0x46, 0x72, 0x6f, 0x6d, 0x42, 0x72, 0x69, 0x64, 0x67,
+	0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x1e, 0x0a, 0x1c, 0x44, 0x65, 0x6c,
+	0x65, 0x74, 0x65, 0x56, 0x69, 0x72, 0x74, 0x75, 0x61, 0x6c, 0x4d, 0x61, 0x63, 0x68, 0x69, 0x6e,
+	0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x1f, 0x0a, 0x1d, 0x44, 0x69, 0x73,
+	0x63, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x44, 0x65, 0x76, 0x69,
+	0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x1c, 0x0a, 0x1a, 0x53, 0x74,
+	0x6f, 0x70, 0x56, 0x69, 0x72, 0x74, 0x75, 0x61, 0x6c, 0x4d, 0x61, 0x63, 0x68, 0x69, 0x6e, 0x65,
+	0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x1b, 0x0a, 0x19, 0x44, 0x65, 0x74, 0x61,
+	0x63, 0x68, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x52, 0x65, 0x73,
+	0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x19, 0x0a, 0x17, 0x44, 0x65, 0x74, 0x61, 0x63, 0x68, 0x49,
+	0x6e, 0x74, 0x65, 0x72, 0x66, 0x61, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x32, 0xb0, 0x0e, 0x0a, 0x05, 0x41, 0x67, 0x65, 0x6e, 0x74, 0x12, 0x64, 0x0a, 0x15, 0x47, 0x65,
 	0x74, 0x49, 0x53, 0x43, 0x53, 0x49, 0x51, 0x75, 0x61, 0x6c, 0x69, 0x66, 0x69, 0x65, 0x64, 0x4e,
 	0x61, 0x6d, 0x65, 0x12, 0x23, 0x2e, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x2e, 0x47, 0x65, 0x74, 0x49,
 	0x53, 0x43, 0x53, 0x49, 0x51, 0x75, 0x61, 0x6c, 0x69, 0x66, 0x69, 0x65, 0x64, 0x4e, 0x61, 0x6d,
@@ -1710,9 +2242,38 @@ var file_agent_proto_rawDesc = []byte{
 	0x63, 0x65, 0x46, 0x72, 0x6f, 0x6d, 0x42, 0x72, 0x69, 0x64, 0x67, 0x65, 0x52, 0x65, 0x71, 0x75,
 	0x65, 0x73, 0x74, 0x1a, 0x28, 0x2e, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x2e, 0x44, 0x65, 0x6c, 0x65,
 	0x74, 0x65, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x66, 0x61, 0x63, 0x65, 0x46, 0x72, 0x6f, 0x6d, 0x42,
-	0x72, 0x69, 0x64, 0x67, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x42,
-	0x09, 0x5a, 0x07, 0x2e, 0x3b, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x62, 0x06, 0x70, 0x72, 0x6f, 0x74,
-	0x6f, 0x33,
+	0x72, 0x69, 0x64, 0x67, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12,
+	0x61, 0x0a, 0x14, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x56, 0x69, 0x72, 0x74, 0x75, 0x61, 0x6c,
+	0x4d, 0x61, 0x63, 0x68, 0x69, 0x6e, 0x65, 0x12, 0x22, 0x2e, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x2e,
+	0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x56, 0x69, 0x72, 0x74, 0x75, 0x61, 0x6c, 0x4d, 0x61, 0x63,
+	0x68, 0x69, 0x6e, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x23, 0x2e, 0x61, 0x67,
+	0x65, 0x6e, 0x74, 0x2e, 0x44, 0x65, 0x6c, 0x65, 0x74, 0x65, 0x56, 0x69, 0x72, 0x74, 0x75, 0x61,
+	0x6c, 0x4d, 0x61, 0x63, 0x68, 0x69, 0x6e, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65,
+	0x22, 0x00, 0x12, 0x64, 0x0a, 0x15, 0x44, 0x69, 0x73, 0x63, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74,
+	0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x12, 0x23, 0x2e, 0x61, 0x67,
+	0x65, 0x6e, 0x74, 0x2e, 0x44, 0x69, 0x73, 0x63, 0x6f, 0x6e, 0x6e, 0x65, 0x63, 0x74, 0x42, 0x6c,
+	0x6f, 0x63, 0x6b, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x1a, 0x24, 0x2e, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x2e, 0x44, 0x69, 0x73, 0x63, 0x6f, 0x6e, 0x6e,
+	0x65, 0x63, 0x74, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x5b, 0x0a, 0x12, 0x53, 0x74, 0x6f, 0x70,
+	0x56, 0x69, 0x72, 0x74, 0x75, 0x61, 0x6c, 0x4d, 0x61, 0x63, 0x68, 0x69, 0x6e, 0x65, 0x12, 0x20,
+	0x2e, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x2e, 0x53, 0x74, 0x6f, 0x70, 0x56, 0x69, 0x72, 0x74, 0x75,
+	0x61, 0x6c, 0x4d, 0x61, 0x63, 0x68, 0x69, 0x6e, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74,
+	0x1a, 0x21, 0x2e, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x2e, 0x53, 0x74, 0x6f, 0x70, 0x56, 0x69, 0x72,
+	0x74, 0x75, 0x61, 0x6c, 0x4d, 0x61, 0x63, 0x68, 0x69, 0x6e, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f,
+	0x6e, 0x73, 0x65, 0x22, 0x00, 0x12, 0x58, 0x0a, 0x11, 0x44, 0x65, 0x74, 0x61, 0x63, 0x68, 0x42,
+	0x6c, 0x6f, 0x63, 0x6b, 0x44, 0x65, 0x76, 0x69, 0x63, 0x65, 0x12, 0x1f, 0x2e, 0x61, 0x67, 0x65,
+	0x6e, 0x74, 0x2e, 0x44, 0x65, 0x74, 0x61, 0x63, 0x68, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x44, 0x65,
+	0x76, 0x69, 0x63, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x1a, 0x20, 0x2e, 0x61, 0x67,
+	0x65, 0x6e, 0x74, 0x2e, 0x44, 0x65, 0x74, 0x61, 0x63, 0x68, 0x42, 0x6c, 0x6f, 0x63, 0x6b, 0x44,
+	0x65, 0x76, 0x69, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x22, 0x00, 0x12,
+	0x52, 0x0a, 0x0f, 0x44, 0x65, 0x74, 0x61, 0x63, 0x68, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x66, 0x61,
+	0x63, 0x65, 0x12, 0x1d, 0x2e, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x2e, 0x44, 0x65, 0x74, 0x61, 0x63,
+	0x68, 0x49, 0x6e, 0x74, 0x65, 0x72, 0x66, 0x61, 0x63, 0x65, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73,
+	0x74, 0x1a, 0x1e, 0x2e, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x2e, 0x44, 0x65, 0x74, 0x61, 0x63, 0x68,
+	0x49, 0x6e, 0x74, 0x65, 0x72, 0x66, 0x61, 0x63, 0x65, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73,
+	0x65, 0x22, 0x00, 0x42, 0x09, 0x5a, 0x07, 0x2e, 0x3b, 0x61, 0x67, 0x65, 0x6e, 0x74, 0x62, 0x06,
+	0x70, 0x72, 0x6f, 0x74, 0x6f, 0x33,
 }
 
 var (
@@ -1727,7 +2288,7 @@ func file_agent_proto_rawDescGZIP() []byte {
 	return file_agent_proto_rawDescData
 }
 
-var file_agent_proto_msgTypes = make([]protoimpl.MessageInfo, 30)
+var file_agent_proto_msgTypes = make([]protoimpl.MessageInfo, 40)
 var file_agent_proto_goTypes = []interface{}{
 	(*GetISCSIQualifiedNameRequest)(nil),      // 0: agent.GetISCSIQualifiedNameRequest
 	(*GetIPTablesRequest)(nil),                // 1: agent.GetIPTablesRequest
@@ -1744,21 +2305,31 @@ var file_agent_proto_goTypes = []interface{}{
 	(*DeleteBridgeRequest)(nil),               // 12: agent.DeleteBridgeRequest
 	(*DeleteVLANInterfaceRequest)(nil),        // 13: agent.DeleteVLANInterfaceRequest
 	(*DeleteInterfaceFromBridgeRequest)(nil),  // 14: agent.DeleteInterfaceFromBridgeRequest
-	(*GetISCSIQualifiedNameResponse)(nil),     // 15: agent.GetISCSIQualifiedNameResponse
-	(*GetIPTablesResponse)(nil),               // 16: agent.GetIPTablesResponse
-	(*SetupDefaultSecurityGroupResponse)(nil), // 17: agent.SetupDefaultSecurityGroupResponse
-	(*AddSecurityGroupResponse)(nil),          // 18: agent.AddSecurityGroupResponse
-	(*AddBridgeResponse)(nil),                 // 19: agent.AddBridgeResponse
-	(*AddVLANInterfaceResponse)(nil),          // 20: agent.AddVLANInterfaceResponse
-	(*AddInterfaceToBridgeResponse)(nil),      // 21: agent.AddInterfaceToBridgeResponse
-	(*AddVirtualMachineResponse)(nil),         // 22: agent.AddVirtualMachineResponse
-	(*ConnectBlockDeviceResponse)(nil),        // 23: agent.ConnectBlockDeviceResponse
-	(*StartVirtualMachineResponse)(nil),       // 24: agent.StartVirtualMachineResponse
-	(*AttachBlockDeviceResponse)(nil),         // 25: agent.AttachBlockDeviceResponse
-	(*AttachInterfaceResponse)(nil),           // 26: agent.AttachInterfaceResponse
-	(*DeleteBridgeResponse)(nil),              // 27: agent.DeleteBridgeResponse
-	(*DeleteVLANInterfaceResponse)(nil),       // 28: agent.DeleteVLANInterfaceResponse
-	(*DeleteInterfaceFromBridgeResponse)(nil), // 29: agent.DeleteInterfaceFromBridgeResponse
+	(*DeleteVirtualMachineRequest)(nil),       // 15: agent.DeleteVirtualMachineRequest
+	(*DisconnectBlockDeviceRequest)(nil),      // 16: agent.DisconnectBlockDeviceRequest
+	(*StopVirtualMachineRequest)(nil),         // 17: agent.StopVirtualMachineRequest
+	(*DetachBlockDeviceRequest)(nil),          // 18: agent.DetachBlockDeviceRequest
+	(*DetachInterfaceRequest)(nil),            // 19: agent.DetachInterfaceRequest
+	(*GetISCSIQualifiedNameResponse)(nil),     // 20: agent.GetISCSIQualifiedNameResponse
+	(*GetIPTablesResponse)(nil),               // 21: agent.GetIPTablesResponse
+	(*SetupDefaultSecurityGroupResponse)(nil), // 22: agent.SetupDefaultSecurityGroupResponse
+	(*AddSecurityGroupResponse)(nil),          // 23: agent.AddSecurityGroupResponse
+	(*AddBridgeResponse)(nil),                 // 24: agent.AddBridgeResponse
+	(*AddVLANInterfaceResponse)(nil),          // 25: agent.AddVLANInterfaceResponse
+	(*AddInterfaceToBridgeResponse)(nil),      // 26: agent.AddInterfaceToBridgeResponse
+	(*AddVirtualMachineResponse)(nil),         // 27: agent.AddVirtualMachineResponse
+	(*ConnectBlockDeviceResponse)(nil),        // 28: agent.ConnectBlockDeviceResponse
+	(*StartVirtualMachineResponse)(nil),       // 29: agent.StartVirtualMachineResponse
+	(*AttachBlockDeviceResponse)(nil),         // 30: agent.AttachBlockDeviceResponse
+	(*AttachInterfaceResponse)(nil),           // 31: agent.AttachInterfaceResponse
+	(*DeleteBridgeResponse)(nil),              // 32: agent.DeleteBridgeResponse
+	(*DeleteVLANInterfaceResponse)(nil),       // 33: agent.DeleteVLANInterfaceResponse
+	(*DeleteInterfaceFromBridgeResponse)(nil), // 34: agent.DeleteInterfaceFromBridgeResponse
+	(*DeleteVirtualMachineResponse)(nil),      // 35: agent.DeleteVirtualMachineResponse
+	(*DisconnectBlockDeviceResponse)(nil),     // 36: agent.DisconnectBlockDeviceResponse
+	(*StopVirtualMachineResponse)(nil),        // 37: agent.StopVirtualMachineResponse
+	(*DetachBlockDeviceResponse)(nil),         // 38: agent.DetachBlockDeviceResponse
+	(*DetachInterfaceResponse)(nil),           // 39: agent.DetachInterfaceResponse
 }
 var file_agent_proto_depIdxs = []int32{
 	0,  // 0: agent.Agent.GetISCSIQualifiedName:input_type -> agent.GetISCSIQualifiedNameRequest
@@ -1776,23 +2347,33 @@ var file_agent_proto_depIdxs = []int32{
 	12, // 12: agent.Agent.DeleteBridge:input_type -> agent.DeleteBridgeRequest
 	13, // 13: agent.Agent.DeleteVLANInterface:input_type -> agent.DeleteVLANInterfaceRequest
 	14, // 14: agent.Agent.DeleteInterfaceFromBridge:input_type -> agent.DeleteInterfaceFromBridgeRequest
-	15, // 15: agent.Agent.GetISCSIQualifiedName:output_type -> agent.GetISCSIQualifiedNameResponse
-	16, // 16: agent.Agent.GetIPTables:output_type -> agent.GetIPTablesResponse
-	17, // 17: agent.Agent.SetupDefaultSecurityGroup:output_type -> agent.SetupDefaultSecurityGroupResponse
-	18, // 18: agent.Agent.AddSecurityGroup:output_type -> agent.AddSecurityGroupResponse
-	19, // 19: agent.Agent.AddBridge:output_type -> agent.AddBridgeResponse
-	20, // 20: agent.Agent.AddVLANInterface:output_type -> agent.AddVLANInterfaceResponse
-	21, // 21: agent.Agent.AddInterfaceToBridge:output_type -> agent.AddInterfaceToBridgeResponse
-	22, // 22: agent.Agent.AddVirtualMachine:output_type -> agent.AddVirtualMachineResponse
-	23, // 23: agent.Agent.ConnectBlockDevice:output_type -> agent.ConnectBlockDeviceResponse
-	24, // 24: agent.Agent.StartVirtualMachine:output_type -> agent.StartVirtualMachineResponse
-	25, // 25: agent.Agent.AttachBlockDevice:output_type -> agent.AttachBlockDeviceResponse
-	26, // 26: agent.Agent.AttachInterface:output_type -> agent.AttachInterfaceResponse
-	27, // 27: agent.Agent.DeleteBridge:output_type -> agent.DeleteBridgeResponse
-	28, // 28: agent.Agent.DeleteVLANInterface:output_type -> agent.DeleteVLANInterfaceResponse
-	29, // 29: agent.Agent.DeleteInterfaceFromBridge:output_type -> agent.DeleteInterfaceFromBridgeResponse
-	15, // [15:30] is the sub-list for method output_type
-	0,  // [0:15] is the sub-list for method input_type
+	15, // 15: agent.Agent.DeleteVirtualMachine:input_type -> agent.DeleteVirtualMachineRequest
+	16, // 16: agent.Agent.DisconnectBlockDevice:input_type -> agent.DisconnectBlockDeviceRequest
+	17, // 17: agent.Agent.StopVirtualMachine:input_type -> agent.StopVirtualMachineRequest
+	18, // 18: agent.Agent.DetachBlockDevice:input_type -> agent.DetachBlockDeviceRequest
+	19, // 19: agent.Agent.DetachInterface:input_type -> agent.DetachInterfaceRequest
+	20, // 20: agent.Agent.GetISCSIQualifiedName:output_type -> agent.GetISCSIQualifiedNameResponse
+	21, // 21: agent.Agent.GetIPTables:output_type -> agent.GetIPTablesResponse
+	22, // 22: agent.Agent.SetupDefaultSecurityGroup:output_type -> agent.SetupDefaultSecurityGroupResponse
+	23, // 23: agent.Agent.AddSecurityGroup:output_type -> agent.AddSecurityGroupResponse
+	24, // 24: agent.Agent.AddBridge:output_type -> agent.AddBridgeResponse
+	25, // 25: agent.Agent.AddVLANInterface:output_type -> agent.AddVLANInterfaceResponse
+	26, // 26: agent.Agent.AddInterfaceToBridge:output_type -> agent.AddInterfaceToBridgeResponse
+	27, // 27: agent.Agent.AddVirtualMachine:output_type -> agent.AddVirtualMachineResponse
+	28, // 28: agent.Agent.ConnectBlockDevice:output_type -> agent.ConnectBlockDeviceResponse
+	29, // 29: agent.Agent.StartVirtualMachine:output_type -> agent.StartVirtualMachineResponse
+	30, // 30: agent.Agent.AttachBlockDevice:output_type -> agent.AttachBlockDeviceResponse
+	31, // 31: agent.Agent.AttachInterface:output_type -> agent.AttachInterfaceResponse
+	32, // 32: agent.Agent.DeleteBridge:output_type -> agent.DeleteBridgeResponse
+	33, // 33: agent.Agent.DeleteVLANInterface:output_type -> agent.DeleteVLANInterfaceResponse
+	34, // 34: agent.Agent.DeleteInterfaceFromBridge:output_type -> agent.DeleteInterfaceFromBridgeResponse
+	35, // 35: agent.Agent.DeleteVirtualMachine:output_type -> agent.DeleteVirtualMachineResponse
+	36, // 36: agent.Agent.DisconnectBlockDevice:output_type -> agent.DisconnectBlockDeviceResponse
+	37, // 37: agent.Agent.StopVirtualMachine:output_type -> agent.StopVirtualMachineResponse
+	38, // 38: agent.Agent.DetachBlockDevice:output_type -> agent.DetachBlockDeviceResponse
+	39, // 39: agent.Agent.DetachInterface:output_type -> agent.DetachInterfaceResponse
+	20, // [20:40] is the sub-list for method output_type
+	0,  // [0:20] is the sub-list for method input_type
 	0,  // [0:0] is the sub-list for extension type_name
 	0,  // [0:0] is the sub-list for extension extendee
 	0,  // [0:0] is the sub-list for field type_name
@@ -1985,7 +2566,7 @@ func file_agent_proto_init() {
 			}
 		}
 		file_agent_proto_msgTypes[15].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetISCSIQualifiedNameResponse); i {
+			switch v := v.(*DeleteVirtualMachineRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -1997,7 +2578,7 @@ func file_agent_proto_init() {
 			}
 		}
 		file_agent_proto_msgTypes[16].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*GetIPTablesResponse); i {
+			switch v := v.(*DisconnectBlockDeviceRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2009,7 +2590,7 @@ func file_agent_proto_init() {
 			}
 		}
 		file_agent_proto_msgTypes[17].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*SetupDefaultSecurityGroupResponse); i {
+			switch v := v.(*StopVirtualMachineRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2021,7 +2602,7 @@ func file_agent_proto_init() {
 			}
 		}
 		file_agent_proto_msgTypes[18].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AddSecurityGroupResponse); i {
+			switch v := v.(*DetachBlockDeviceRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2033,7 +2614,7 @@ func file_agent_proto_init() {
 			}
 		}
 		file_agent_proto_msgTypes[19].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AddBridgeResponse); i {
+			switch v := v.(*DetachInterfaceRequest); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2045,7 +2626,7 @@ func file_agent_proto_init() {
 			}
 		}
 		file_agent_proto_msgTypes[20].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AddVLANInterfaceResponse); i {
+			switch v := v.(*GetISCSIQualifiedNameResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2057,7 +2638,7 @@ func file_agent_proto_init() {
 			}
 		}
 		file_agent_proto_msgTypes[21].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AddInterfaceToBridgeResponse); i {
+			switch v := v.(*GetIPTablesResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2069,7 +2650,7 @@ func file_agent_proto_init() {
 			}
 		}
 		file_agent_proto_msgTypes[22].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AddVirtualMachineResponse); i {
+			switch v := v.(*SetupDefaultSecurityGroupResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2081,7 +2662,7 @@ func file_agent_proto_init() {
 			}
 		}
 		file_agent_proto_msgTypes[23].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*ConnectBlockDeviceResponse); i {
+			switch v := v.(*AddSecurityGroupResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2093,7 +2674,7 @@ func file_agent_proto_init() {
 			}
 		}
 		file_agent_proto_msgTypes[24].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*StartVirtualMachineResponse); i {
+			switch v := v.(*AddBridgeResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2105,7 +2686,7 @@ func file_agent_proto_init() {
 			}
 		}
 		file_agent_proto_msgTypes[25].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AttachBlockDeviceResponse); i {
+			switch v := v.(*AddVLANInterfaceResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2117,7 +2698,7 @@ func file_agent_proto_init() {
 			}
 		}
 		file_agent_proto_msgTypes[26].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*AttachInterfaceResponse); i {
+			switch v := v.(*AddInterfaceToBridgeResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2129,7 +2710,7 @@ func file_agent_proto_init() {
 			}
 		}
 		file_agent_proto_msgTypes[27].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DeleteBridgeResponse); i {
+			switch v := v.(*AddVirtualMachineResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2141,7 +2722,7 @@ func file_agent_proto_init() {
 			}
 		}
 		file_agent_proto_msgTypes[28].Exporter = func(v interface{}, i int) interface{} {
-			switch v := v.(*DeleteVLANInterfaceResponse); i {
+			switch v := v.(*ConnectBlockDeviceResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2153,7 +2734,127 @@ func file_agent_proto_init() {
 			}
 		}
 		file_agent_proto_msgTypes[29].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*StartVirtualMachineResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_agent_proto_msgTypes[30].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AttachBlockDeviceResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_agent_proto_msgTypes[31].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*AttachInterfaceResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_agent_proto_msgTypes[32].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DeleteBridgeResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_agent_proto_msgTypes[33].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DeleteVLANInterfaceResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_agent_proto_msgTypes[34].Exporter = func(v interface{}, i int) interface{} {
 			switch v := v.(*DeleteInterfaceFromBridgeResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_agent_proto_msgTypes[35].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DeleteVirtualMachineResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_agent_proto_msgTypes[36].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DisconnectBlockDeviceResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_agent_proto_msgTypes[37].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*StopVirtualMachineResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_agent_proto_msgTypes[38].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DetachBlockDeviceResponse); i {
+			case 0:
+				return &v.state
+			case 1:
+				return &v.sizeCache
+			case 2:
+				return &v.unknownFields
+			default:
+				return nil
+			}
+		}
+		file_agent_proto_msgTypes[39].Exporter = func(v interface{}, i int) interface{} {
+			switch v := v.(*DetachInterfaceResponse); i {
 			case 0:
 				return &v.state
 			case 1:
@@ -2171,7 +2872,7 @@ func file_agent_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: file_agent_proto_rawDesc,
 			NumEnums:      0,
-			NumMessages:   30,
+			NumMessages:   40,
 			NumExtensions: 0,
 			NumServices:   1,
 		},
@@ -2212,6 +2913,11 @@ type AgentClient interface {
 	DeleteBridge(ctx context.Context, in *DeleteBridgeRequest, opts ...grpc.CallOption) (*DeleteBridgeResponse, error)
 	DeleteVLANInterface(ctx context.Context, in *DeleteVLANInterfaceRequest, opts ...grpc.CallOption) (*DeleteVLANInterfaceResponse, error)
 	DeleteInterfaceFromBridge(ctx context.Context, in *DeleteInterfaceFromBridgeRequest, opts ...grpc.CallOption) (*DeleteInterfaceFromBridgeResponse, error)
+	DeleteVirtualMachine(ctx context.Context, in *DeleteVirtualMachineRequest, opts ...grpc.CallOption) (*DeleteVirtualMachineResponse, error)
+	DisconnectBlockDevice(ctx context.Context, in *DisconnectBlockDeviceRequest, opts ...grpc.CallOption) (*DisconnectBlockDeviceResponse, error)
+	StopVirtualMachine(ctx context.Context, in *StopVirtualMachineRequest, opts ...grpc.CallOption) (*StopVirtualMachineResponse, error)
+	DetachBlockDevice(ctx context.Context, in *DetachBlockDeviceRequest, opts ...grpc.CallOption) (*DetachBlockDeviceResponse, error)
+	DetachInterface(ctx context.Context, in *DetachInterfaceRequest, opts ...grpc.CallOption) (*DetachInterfaceResponse, error)
 }
 
 type agentClient struct {
@@ -2357,6 +3063,51 @@ func (c *agentClient) DeleteInterfaceFromBridge(ctx context.Context, in *DeleteI
 	return out, nil
 }
 
+func (c *agentClient) DeleteVirtualMachine(ctx context.Context, in *DeleteVirtualMachineRequest, opts ...grpc.CallOption) (*DeleteVirtualMachineResponse, error) {
+	out := new(DeleteVirtualMachineResponse)
+	err := c.cc.Invoke(ctx, "/agent.Agent/DeleteVirtualMachine", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *agentClient) DisconnectBlockDevice(ctx context.Context, in *DisconnectBlockDeviceRequest, opts ...grpc.CallOption) (*DisconnectBlockDeviceResponse, error) {
+	out := new(DisconnectBlockDeviceResponse)
+	err := c.cc.Invoke(ctx, "/agent.Agent/DisconnectBlockDevice", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *agentClient) StopVirtualMachine(ctx context.Context, in *StopVirtualMachineRequest, opts ...grpc.CallOption) (*StopVirtualMachineResponse, error) {
+	out := new(StopVirtualMachineResponse)
+	err := c.cc.Invoke(ctx, "/agent.Agent/StopVirtualMachine", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *agentClient) DetachBlockDevice(ctx context.Context, in *DetachBlockDeviceRequest, opts ...grpc.CallOption) (*DetachBlockDeviceResponse, error) {
+	out := new(DetachBlockDeviceResponse)
+	err := c.cc.Invoke(ctx, "/agent.Agent/DetachBlockDevice", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *agentClient) DetachInterface(ctx context.Context, in *DetachInterfaceRequest, opts ...grpc.CallOption) (*DetachInterfaceResponse, error) {
+	out := new(DetachInterfaceResponse)
+	err := c.cc.Invoke(ctx, "/agent.Agent/DetachInterface", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // AgentServer is the server API for Agent service.
 type AgentServer interface {
 	GetISCSIQualifiedName(context.Context, *GetISCSIQualifiedNameRequest) (*GetISCSIQualifiedNameResponse, error)
@@ -2374,6 +3125,11 @@ type AgentServer interface {
 	DeleteBridge(context.Context, *DeleteBridgeRequest) (*DeleteBridgeResponse, error)
 	DeleteVLANInterface(context.Context, *DeleteVLANInterfaceRequest) (*DeleteVLANInterfaceResponse, error)
 	DeleteInterfaceFromBridge(context.Context, *DeleteInterfaceFromBridgeRequest) (*DeleteInterfaceFromBridgeResponse, error)
+	DeleteVirtualMachine(context.Context, *DeleteVirtualMachineRequest) (*DeleteVirtualMachineResponse, error)
+	DisconnectBlockDevice(context.Context, *DisconnectBlockDeviceRequest) (*DisconnectBlockDeviceResponse, error)
+	StopVirtualMachine(context.Context, *StopVirtualMachineRequest) (*StopVirtualMachineResponse, error)
+	DetachBlockDevice(context.Context, *DetachBlockDeviceRequest) (*DetachBlockDeviceResponse, error)
+	DetachInterface(context.Context, *DetachInterfaceRequest) (*DetachInterfaceResponse, error)
 }
 
 // UnimplementedAgentServer can be embedded to have forward compatible implementations.
@@ -2424,6 +3180,21 @@ func (*UnimplementedAgentServer) DeleteVLANInterface(context.Context, *DeleteVLA
 }
 func (*UnimplementedAgentServer) DeleteInterfaceFromBridge(context.Context, *DeleteInterfaceFromBridgeRequest) (*DeleteInterfaceFromBridgeResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method DeleteInterfaceFromBridge not implemented")
+}
+func (*UnimplementedAgentServer) DeleteVirtualMachine(context.Context, *DeleteVirtualMachineRequest) (*DeleteVirtualMachineResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DeleteVirtualMachine not implemented")
+}
+func (*UnimplementedAgentServer) DisconnectBlockDevice(context.Context, *DisconnectBlockDeviceRequest) (*DisconnectBlockDeviceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DisconnectBlockDevice not implemented")
+}
+func (*UnimplementedAgentServer) StopVirtualMachine(context.Context, *StopVirtualMachineRequest) (*StopVirtualMachineResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method StopVirtualMachine not implemented")
+}
+func (*UnimplementedAgentServer) DetachBlockDevice(context.Context, *DetachBlockDeviceRequest) (*DetachBlockDeviceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DetachBlockDevice not implemented")
+}
+func (*UnimplementedAgentServer) DetachInterface(context.Context, *DetachInterfaceRequest) (*DetachInterfaceResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method DetachInterface not implemented")
 }
 
 func RegisterAgentServer(s *grpc.Server, srv AgentServer) {
@@ -2700,6 +3471,96 @@ func _Agent_DeleteInterfaceFromBridge_Handler(srv interface{}, ctx context.Conte
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Agent_DeleteVirtualMachine_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DeleteVirtualMachineRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AgentServer).DeleteVirtualMachine(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/agent.Agent/DeleteVirtualMachine",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AgentServer).DeleteVirtualMachine(ctx, req.(*DeleteVirtualMachineRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Agent_DisconnectBlockDevice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DisconnectBlockDeviceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AgentServer).DisconnectBlockDevice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/agent.Agent/DisconnectBlockDevice",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AgentServer).DisconnectBlockDevice(ctx, req.(*DisconnectBlockDeviceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Agent_StopVirtualMachine_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(StopVirtualMachineRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AgentServer).StopVirtualMachine(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/agent.Agent/StopVirtualMachine",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AgentServer).StopVirtualMachine(ctx, req.(*StopVirtualMachineRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Agent_DetachBlockDevice_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DetachBlockDeviceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AgentServer).DetachBlockDevice(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/agent.Agent/DetachBlockDevice",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AgentServer).DetachBlockDevice(ctx, req.(*DetachBlockDeviceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Agent_DetachInterface_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(DetachInterfaceRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(AgentServer).DetachInterface(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/agent.Agent/DetachInterface",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(AgentServer).DetachInterface(ctx, req.(*DetachInterfaceRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Agent_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "agent.Agent",
 	HandlerType: (*AgentServer)(nil),
@@ -2763,6 +3624,26 @@ var _Agent_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "DeleteInterfaceFromBridge",
 			Handler:    _Agent_DeleteInterfaceFromBridge_Handler,
+		},
+		{
+			MethodName: "DeleteVirtualMachine",
+			Handler:    _Agent_DeleteVirtualMachine_Handler,
+		},
+		{
+			MethodName: "DisconnectBlockDevice",
+			Handler:    _Agent_DisconnectBlockDevice_Handler,
+		},
+		{
+			MethodName: "StopVirtualMachine",
+			Handler:    _Agent_StopVirtualMachine_Handler,
+		},
+		{
+			MethodName: "DetachBlockDevice",
+			Handler:    _Agent_DetachBlockDevice_Handler,
+		},
+		{
+			MethodName: "DetachInterface",
+			Handler:    _Agent_DetachInterface_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
