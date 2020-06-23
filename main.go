@@ -10,8 +10,11 @@ import (
 	"time"
 
 	libvirt "github.com/digitalocean/go-libvirt"
+	"golang.org/x/sync/errgroup"
 	"google.golang.org/grpc"
 
+	dspb "github.com/whywaita/satelit/api/satelit_datastore"
+	"github.com/whywaita/teleskop/dhcp"
 	pb "github.com/whywaita/teleskop/protoc/agent"
 )
 
@@ -23,6 +26,7 @@ type agent struct {
 	pb.UnimplementedAgentServer
 
 	libvirtClient *libvirt.Libvirt
+	dhcpServer    *dhcp.Server
 }
 
 func main() {
@@ -37,12 +41,12 @@ func run() error {
 	defer cancel()
 
 	var dialer net.Dialer
-	conn, err := dialer.DialContext(ctx, "tcp", "127.0.0.1:16509")
+	libvirtConn, err := dialer.DialContext(ctx, "tcp", "127.0.0.1:16509")
 	if err != nil {
 		return fmt.Errorf("failed to dial to libvirtd: %w", err)
 	}
 
-	libvirtClient := libvirt.New(conn)
+	libvirtClient := libvirt.New(libvirtConn)
 	if err := libvirtClient.Connect(); err != nil {
 		return fmt.Errorf("failed to connect to libvirtd: %w", err)
 	}
@@ -58,12 +62,31 @@ func run() error {
 		return fmt.Errorf("failed to listen address: %w", err)
 	}
 
+	grpcConn, err := grpc.DialContext(ctx,
+		"10.194.228.99:9263",
+		grpc.WithInsecure(),
+	)
+	if err != nil {
+		return fmt.Errorf("failed to dial to satelit datastore api: %w", err)
+	}
+	datastoreClient := dspb.NewSatelitDatastoreClient(grpcConn)
+
 	server := grpc.NewServer()
+	dhcpServer := dhcp.NewServer(datastoreClient)
 	pb.RegisterAgentServer(server, &agent{
 		libvirtClient: libvirtClient,
+		dhcpServer:    dhcpServer,
 	})
 
-	fmt.Printf("listening on address %s\n", listenAddress)
+	eg, ctx := errgroup.WithContext(ctx)
+	eg.Go(func() error {
+		fmt.Printf("listening on address %s\n", listenAddress)
+		return server.Serve(lis)
+	})
+	eg.Go(func() error {
+		fmt.Printf("listening on address %s\n", "0.0.0.0:67")
+		return dhcpServer.ListenAndServe()
+	})
 
-	return server.Serve(lis)
+	return eg.Wait()
 }
