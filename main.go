@@ -9,7 +9,13 @@ import (
 	"os"
 	"time"
 
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
+
 	libvirt "github.com/digitalocean/go-libvirt"
+	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
+	grpc_zap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
+	grpc_ctxtags "github.com/grpc-ecosystem/go-grpc-middleware/tags"
 	"golang.org/x/sync/errgroup"
 	"google.golang.org/grpc"
 
@@ -36,9 +42,35 @@ func main() {
 	}
 }
 
+func initLogger() (*zap.Logger, error) {
+	return zap.Config{
+		Level:    zap.NewAtomicLevelAt(zap.InfoLevel),
+		Encoding: "json",
+		EncoderConfig: zapcore.EncoderConfig{
+			TimeKey:        "Time",
+			LevelKey:       "Level",
+			NameKey:        "Name",
+			CallerKey:      "Caller",
+			MessageKey:     "Msg",
+			StacktraceKey:  "St",
+			EncodeLevel:    zapcore.CapitalLevelEncoder,
+			EncodeTime:     zapcore.ISO8601TimeEncoder,
+			EncodeDuration: zapcore.StringDurationEncoder,
+			EncodeCaller:   zapcore.ShortCallerEncoder,
+		},
+		OutputPaths:      []string{"stdout"},
+		ErrorOutputPaths: []string{"stderr"},
+	}.Build()
+}
+
 func run() error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
+
+	logger, err := initLogger()
+	if err != nil {
+		return fmt.Errorf("failed to init logger: %w", err)
+	}
 
 	var dialer net.Dialer
 	libvirtConn, err := dialer.DialContext(ctx, "tcp", "127.0.0.1:16509")
@@ -71,9 +103,23 @@ func run() error {
 	}
 	datastoreClient := dspb.NewSatelitDatastoreClient(grpcConn)
 
-	server := grpc.NewServer()
+	grpc_zap.ReplaceGrpcLoggerV2(logger)
+	grpcServer := grpc.NewServer(
+		grpc_middleware.WithUnaryServerChain(
+			grpc_ctxtags.UnaryServerInterceptor(),
+			grpc_zap.PayloadUnaryServerInterceptor(logger, func(ctx context.Context, fullMethodName string, servingObject interface{}) bool {
+				return true
+			}),
+		),
+		grpc_middleware.WithStreamServerChain(
+			grpc_ctxtags.StreamServerInterceptor(),
+			grpc_zap.PayloadStreamServerInterceptor(logger, func(ctx context.Context, fullMethodName string, servingObject interface{}) bool {
+				return true
+			}),
+		),
+	)
 	dhcpServer := dhcp.NewServer(datastoreClient)
-	pb.RegisterAgentServer(server, &agent{
+	pb.RegisterAgentServer(grpcServer, &agent{
 		libvirtClient: libvirtClient,
 		dhcpServer:    dhcpServer,
 	})
@@ -81,7 +127,7 @@ func run() error {
 	eg, ctx := errgroup.WithContext(ctx)
 	eg.Go(func() error {
 		fmt.Printf("listening on address %s\n", listenAddress)
-		return server.Serve(lis)
+		return grpcServer.Serve(lis)
 	})
 	eg.Go(func() error {
 		fmt.Printf("listening on address %s\n", "0.0.0.0:67")
