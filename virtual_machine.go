@@ -304,7 +304,7 @@ func (a *agent) DetachBlockDevice(ctx context.Context, req *pb.DetachBlockDevice
 		flags = libvirt.DomainDeviceModifyConfig | libvirt.DomainDeviceModifyForce
 	}
 
-	if err := a.libvirtClient.DomainDetachDeviceFlags(*domain, "", uint32(flags)); err != nil {
+	if err := a.libvirtClient.DomainDetachDeviceFlags(*domain, buff.String(), uint32(flags)); err != nil {
 		return nil, status.Errorf(codes.Internal, "failed to detach block device: %+v", err)
 	}
 
