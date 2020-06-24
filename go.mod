@@ -5,11 +5,9 @@ go 1.14
 require (
 	github.com/coreos/go-iptables v0.4.5
 	github.com/digitalocean/go-libvirt v0.0.0-20200320195706-d56fdc7b97e1
-	github.com/go-kit/kit v0.10.0 // indirect
 	github.com/gogo/protobuf v1.3.1 // indirect
 	github.com/golang/protobuf v1.4.2
 	github.com/grpc-ecosystem/go-grpc-middleware v1.2.0
-	github.com/sirupsen/logrus v1.6.0 // indirect
 	github.com/stretchr/testify v1.6.1 // indirect
 	github.com/vishvananda/netlink v1.1.0
 	github.com/whywaita/go-os-brick v0.0.4
@@ -23,6 +21,5 @@ require (
 	google.golang.org/genproto v0.0.0-20200623002339-fbb79eadd5eb // indirect
 	google.golang.org/grpc v1.30.0
 	google.golang.org/protobuf v1.24.0
-	gopkg.in/yaml.v2 v2.3.0 // indirect
 	gopkg.in/yaml.v3 v3.0.0-20200615113413-eeeca48fe776 // indirect
 )

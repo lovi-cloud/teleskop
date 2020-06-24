@@ -245,6 +245,112 @@ func (a *agent) AttachInterface(ctx context.Context, req *pb.AttachInterfaceRequ
 	}, nil
 }
 
+func (a *agent) DeleteVirtualMachine(ctx context.Context, req *pb.DeleteVirtualMachineRequest) (*pb.DeleteVirtualMachineResponse, error) {
+	domain, err := a.domainLookupByUUID(req.Uuid)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := a.libvirtClient.DomainUndefine(*domain); err != nil {
+		return nil, status.Errorf(codes.Internal, "failed to undefine domain: %+v", err)
+	}
+
+	return &pb.DeleteVirtualMachineResponse{}, nil
+}
+
+func (a *agent) StopVirtualMachine(ctx context.Context, req *pb.StopVirtualMachineRequest) (*pb.StopVirtualMachineResponse, error) {
+	domain, err := a.domainLookupByUUID(req.Uuid)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := a.libvirtClient.DomainDestroy(*domain); err != nil {
+		return nil, status.Errorf(codes.Internal, "failed to destory domain: %+v", err)
+	}
+
+	return &pb.StopVirtualMachineResponse{}, nil
+}
+
+func (a *agent) DetachBlockDevice(ctx context.Context, req *pb.DetachBlockDeviceRequest) (*pb.DetachBlockDeviceResponse, error) {
+	domain, err := a.domainLookupByUUID(req.Uuid)
+	if err != nil {
+		return nil, err
+	}
+
+	if diskTmpl == nil {
+		tmp, err := template.New("diskTmpl").Parse(diskTmplStr)
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "failed to parse disk template: %+v", err)
+		}
+		diskTmpl = tmp
+	}
+
+	var buff bytes.Buffer
+	if err := diskTmpl.Execute(&buff, req); err != nil {
+		return nil, status.Errorf(codes.InvalidArgument, "failed to exec disk template: %+v", err)
+	}
+
+	state, err := a.getDomainState(ctx, *domain)
+	if err != nil {
+		return nil, err
+	}
+	var flags libvirt.DomainDeviceModifyFlags
+	switch libvirt.DomainState(state) {
+	case libvirt.DomainRunning:
+		flags = libvirt.DomainDeviceModifyConfig | libvirt.DomainDeviceModifyLive
+	case libvirt.DomainShutoff:
+		flags = libvirt.DomainDeviceModifyConfig
+	default:
+		flags = libvirt.DomainDeviceModifyConfig | libvirt.DomainDeviceModifyForce
+	}
+
+	if err := a.libvirtClient.DomainDetachDeviceFlags(*domain, buff.String(), uint32(flags)); err != nil {
+		return nil, status.Errorf(codes.Internal, "failed to detach block device: %+v", err)
+	}
+
+	return &pb.DetachBlockDeviceResponse{}, nil
+}
+
+func (a *agent) DetachInterface(ctx context.Context, req *pb.DetachInterfaceRequest) (*pb.DetachInterfaceResponse, error) {
+	domain, err := a.domainLookupByUUID(req.Uuid)
+	if err != nil {
+		return nil, err
+	}
+
+	if interfaceTmpl == nil {
+		tmp, err := template.New("interfaceTmpl").Parse(interfaceTmplStr)
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "failed to parse interface template: %+v", err)
+		}
+		interfaceTmpl = tmp
+	}
+
+	var buff bytes.Buffer
+	if err := interfaceTmpl.Execute(&buff, req); err != nil {
+		return nil, status.Errorf(codes.InvalidArgument, "failed to exec interface template: %+v", err)
+	}
+
+	state, err := a.getDomainState(ctx, *domain)
+	if err != nil {
+		return nil, err
+	}
+	var flags libvirt.DomainDeviceModifyFlags
+	switch libvirt.DomainState(state) {
+	case libvirt.DomainRunning:
+		flags = libvirt.DomainDeviceModifyConfig | libvirt.DomainDeviceModifyLive
+	case libvirt.DomainShutoff:
+		flags = libvirt.DomainDeviceModifyConfig
+	default:
+		flags = libvirt.DomainDeviceModifyConfig | libvirt.DomainDeviceModifyForce
+	}
+
+	if err := a.libvirtClient.DomainDetachDeviceFlags(*domain, buff.String(), uint32(flags)); err != nil {
+		return nil, status.Errorf(codes.Internal, "failed to detach interface: %+v", err)
+	}
+
+	return &pb.DetachInterfaceResponse{}, nil
+}
+
 func (a *agent) getDomainState(ctx context.Context, domain libvirt.Domain) (int32, error) {
 	state, _, err := a.libvirtClient.DomainGetState(domain, 0)
 	if err != nil {
