@@ -103,6 +103,9 @@ func run() error {
 	}
 	datastoreClient := dspb.NewSatelitDatastoreClient(grpcConn)
 
+	opts := []grpc_zap.Option{
+		grpc_zap.WithMessageProducer(grpc_zap.DefaultMessageProducer),
+	}
 	grpc_zap.ReplaceGrpcLoggerV2(logger)
 	grpcServer := grpc.NewServer(
 		grpc_middleware.WithUnaryServerChain(
@@ -110,12 +113,14 @@ func run() error {
 			grpc_zap.PayloadUnaryServerInterceptor(logger, func(ctx context.Context, fullMethodName string, servingObject interface{}) bool {
 				return true
 			}),
+			grpc_zap.UnaryServerInterceptor(logger, opts...),
 		),
 		grpc_middleware.WithStreamServerChain(
 			grpc_ctxtags.StreamServerInterceptor(),
 			grpc_zap.PayloadStreamServerInterceptor(logger, func(ctx context.Context, fullMethodName string, servingObject interface{}) bool {
 				return true
 			}),
+			grpc_zap.StreamServerInterceptor(logger, opts...),
 		),
 	)
 	dhcpServer := dhcp.NewServer(datastoreClient)
