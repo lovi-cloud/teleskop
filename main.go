@@ -95,7 +95,7 @@ func run() error {
 	}
 
 	grpcConn, err := grpc.DialContext(ctx,
-		"10.194.228.99:9263",
+		"10.197.32.54:9263",
 		grpc.WithInsecure(),
 	)
 	if err != nil {
