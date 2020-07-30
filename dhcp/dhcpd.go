@@ -65,7 +65,7 @@ func (s *Server) ListenAndServe() error {
 			continue
 		}
 	}
-	return nil
+	// return nil
 }
 
 func makeResponse(intf net.Interface, req dhcp4.Packet, lease *pb.DHCPLease) (*dhcp4.Packet, error) {

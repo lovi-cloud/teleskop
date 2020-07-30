@@ -29,8 +29,6 @@ const (
 )
 
 type agent struct {
-	pb.UnimplementedAgentServer
-
 	libvirtClient *libvirt.Libvirt
 	dhcpServer    *dhcp.Server
 }

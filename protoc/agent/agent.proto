@@ -61,7 +61,9 @@ message AddSecurityGroupRequest {
 }
 
 message AddBridgeRequest {
-  string name = 1;
+  string name          = 1;
+  string metadata_cidr = 2;
+  bool   internal_only = 3;
 }
 
 message AddVLANInterfaceRequest {
