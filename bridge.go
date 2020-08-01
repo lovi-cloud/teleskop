@@ -5,8 +5,7 @@ import (
 	"context"
 	"fmt"
 	"net"
-	"os/exec"
-	"strings"
+	"os"
 	"text/template"
 
 	"github.com/vishvananda/netlink"
@@ -86,6 +85,10 @@ func (a *agent) DeleteBridge(ctx context.Context, req *pb.DeleteBridgeRequest) (
 		return nil, status.Errorf(codes.Internal, "failed to undefine network: %+v", err)
 	}
 
+	if err := deleteTeleskopInterfaceIfExists(ctx, req.Name); err != nil {
+		return nil, status.Errorf(codes.Internal, "failed to delete teleskop interface: %+v", err)
+	}
+
 	fmt.Printf("stopped network: %+v\n", network)
 
 	return &pb.DeleteBridgeResponse{}, nil
@@ -123,47 +126,113 @@ func (a *agent) DeleteInterfaceFromBridge(ctx context.Context, req *pb.DeleteInt
 }
 
 func addTeleskopInterface(ctx context.Context, name string, ip net.IP, ipnet *net.IPNet) error {
-	var err error
-	veth0 := fmt.Sprintf("%s-dhcp", name)
-	veth1 := fmt.Sprintf("dhcp-%s", name)
-	err = ipCmd(ctx, "link", "add", veth0, "type", "veth", "peer", "name", veth1)
+	veth, vethPeer, err := createVethPeerIfNotExists(ctx, name)
 	if err != nil {
 		return err
 	}
-	err = brctlCmd(ctx, "addif", name, veth0)
+
+	bridge, err := netlink.LinkByName(name)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to find bridge name=%s: %w", name, err)
 	}
-	err = ipCmd(ctx, "link", "set", "up", veth0)
+	err = netlink.LinkSetMaster(veth, bridge)
 	if err != nil {
-		return err
+		return fmt.Errorf("failed to set link master link=%s bridge=%s: %w", veth.Attrs().Name, bridge.Attrs().Name, err)
 	}
-	err = ipCmd(ctx, "link", "set", "up", veth1)
-	if err != nil {
-		return err
-	}
+
 	mask, _ := ipnet.Mask.Size()
-	addr := fmt.Sprintf("%s/%d", ip.String(), mask)
-	err = ipCmd(ctx, "addr", "add", addr, "dev", veth1)
+	addr, err := netlink.ParseAddr(fmt.Sprintf("%s/%d", ip.String(), mask))
+	if err != nil {
+		return fmt.Errorf("failed to parse addr=\"%s/%d\": %w", ip.String(), mask, err)
+	}
+	err = netlink.AddrAdd(vethPeer, addr)
+	if err != nil {
+		return fmt.Errorf("failed to addr add link=%s, addr=%s: %w", vethPeer.Attrs().Name, addr, err)
+	}
+
+	err = netlink.LinkSetUp(veth)
+	if err != nil {
+		return fmt.Errorf("failed to set up link=%s: %w", veth.Attrs().Name, err)
+	}
+	err = netlink.LinkSetUp(vethPeer)
+	if err != nil {
+		return fmt.Errorf("failed to set up link=%s: %w", vethPeer.Attrs().Name, err)
+	}
+
+	return nil
+}
+
+func deleteTeleskopInterfaceIfExists(ctx context.Context, name string) error {
+	veth, vethPeer, err := createVethPeerIfNotExists(ctx, name)
 	if err != nil {
 		return err
 	}
 
-	return nil
-}
-
-func ipCmd(ctx context.Context, arg ...string) error {
-	return execCmd(ctx, "ip", arg...)
-}
-
-func brctlCmd(ctx context.Context, arg ...string) error {
-	return execCmd(ctx, "brctl", arg...)
-}
-
-func execCmd(ctx context.Context, name string, arg ...string) error {
-	out, err := exec.CommandContext(ctx, name, arg...).CombinedOutput()
+	err = netlink.LinkSetDown(veth)
 	if err != nil {
-		return fmt.Errorf("failed to exec \"%s %s\", msg=\"%s\": %w", name, strings.Join(arg, " "), string(out), err)
+		return fmt.Errorf("failed to set down link=%s: %w", veth.Attrs().Name, err)
 	}
+	err = netlink.LinkSetDown(vethPeer)
+	if err != nil {
+		return fmt.Errorf("failed to set down link=%s: %w", vethPeer.Attrs().Name, err)
+	}
+
+	addrs, err := netlink.AddrList(vethPeer, netlink.FAMILY_V4)
+	if err != nil {
+		return fmt.Errorf("failed to get addr list link=%s: %w", vethPeer.Attrs().Name, err)
+	}
+	for _, addr := range addrs {
+		err = netlink.AddrDel(vethPeer, &addr)
+		if err != nil {
+			fmt.Fprintf(os.Stderr, "failed to delete addr link=%s, addr=%s: %+v\n", vethPeer.Attrs().Name, addr, err)
+		}
+	}
+
+	err = netlink.LinkSetNoMaster(veth)
+	if err != nil {
+		return fmt.Errorf("failed to set link no master link=%s: %w", veth.Attrs().Name, err)
+	}
+
+	err = netlink.LinkDel(veth)
+	if err != nil {
+		return fmt.Errorf("failed to delete link link=%s: %w", veth.Attrs().Name, err)
+	}
+
 	return nil
+}
+
+func createVethPeerIfNotExists(ctx context.Context, name string) (netlink.Link, netlink.Link, error) {
+	var err error
+	var veth, vethPeer netlink.Link
+
+	vethName := fmt.Sprintf("%s-dhcp", name)
+	vethPeerName := fmt.Sprintf("dhcp-%s", name)
+
+	veth, err = netlink.LinkByName(vethName)
+	if err != nil {
+		veth = &netlink.Veth{
+			LinkAttrs: netlink.LinkAttrs{
+				Name: vethName,
+			},
+			PeerName: vethPeerName,
+		}
+		err2 := netlink.LinkAdd(veth)
+		if err2 != nil {
+			return nil, nil, fmt.Errorf("failed to add new link name=%s: %w", vethName, err)
+		}
+	}
+	v, ok := veth.(*netlink.Veth)
+	if !ok {
+		return nil, nil, fmt.Errorf("invalid link name=%s", veth.Attrs().Name)
+	}
+	peerIndex, err := netlink.VethPeerIndex(v)
+	if err != nil {
+		return nil, nil, fmt.Errorf("failed to find veth peer index name=%s: %w", veth.Attrs().Name, err)
+	}
+	vethPeer, err = netlink.LinkByIndex(peerIndex)
+	if err != nil {
+		return nil, nil, fmt.Errorf("failed to find veth peer link by index=%d: %w", peerIndex, err)
+	}
+
+	return veth, vethPeer, nil
 }
