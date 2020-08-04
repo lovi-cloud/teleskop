@@ -165,7 +165,7 @@ func addTeleskopInterface(ctx context.Context, name string, ip net.IP, ipnet *ne
 func deleteTeleskopInterfaceIfExists(ctx context.Context, name string) error {
 	veth, vethPeer, err := createVethPeerIfNotExists(ctx, name)
 	if err != nil {
-		return err
+		return nil
 	}
 
 	err = netlink.LinkSetDown(veth)
