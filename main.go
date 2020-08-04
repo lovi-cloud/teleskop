@@ -9,6 +9,8 @@ import (
 	"os"
 	"time"
 
+	"github.com/whywaita/teleskop/metadata"
+
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 
@@ -126,6 +128,7 @@ func run() error {
 		libvirtClient: libvirtClient,
 		dhcpServer:    dhcpServer,
 	})
+	metadataServer := metadata.New(datastoreClient)
 
 	eg, ctx := errgroup.WithContext(ctx)
 	eg.Go(func() error {
@@ -135,6 +138,10 @@ func run() error {
 	eg.Go(func() error {
 		fmt.Printf("listening on address %s\n", "0.0.0.0:67")
 		return dhcpServer.ListenAndServe()
+	})
+	eg.Go(func() error {
+		fmt.Printf("listening on address %s\n", "0.0.0.0:80")
+		return metadataServer.Serve(context.Background(), "0.0.0.0:80")
 	})
 
 	return eg.Wait()
