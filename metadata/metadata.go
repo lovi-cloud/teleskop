@@ -62,7 +62,7 @@ func (s *Server) loggingHandler(handler http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		rec := httptest.NewRecorder()
 		handler.ServeHTTP(rec, r)
-		fmt.Printf("http request: url=%s, remote=%s, code=%d", r.URL.String(), r.RemoteAddr, rec.Code)
+		fmt.Printf("http request: url=%s, remote=%s, code=%d\n", r.URL.String(), r.RemoteAddr, rec.Code)
 		w.WriteHeader(rec.Code)
 		io.Copy(w, rec.Body)
 	})
