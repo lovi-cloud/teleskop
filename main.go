@@ -4,6 +4,7 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	"net"
 	"os"
@@ -64,6 +65,12 @@ func initLogger() (*zap.Logger, error) {
 }
 
 func run() error {
+	var (
+		satelitEndpoint string
+	)
+	flag.StringVar(&satelitEndpoint, "satelit", "172.0.0.1:9236", "satelit datastore api endpoint")
+	flag.Parse()
+
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -95,8 +102,9 @@ func run() error {
 	}
 
 	grpcConn, err := grpc.DialContext(ctx,
-		"10.197.32.54:9263",
+		satelitEndpoint,
 		grpc.WithInsecure(),
+		grpc.WithBlock(),
 	)
 	if err != nil {
 		return fmt.Errorf("failed to dial to satelit datastore api: %w", err)
