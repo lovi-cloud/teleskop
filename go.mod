@@ -13,6 +13,8 @@ require (
 	github.com/vishvananda/netlink v1.1.0
 	github.com/whywaita/go-os-brick v0.0.7-0.20200805023019-c2451b5384ea
 	github.com/whywaita/satelit v0.0.0-20200804092436-c3032545864e
+	github.com/whywaita/go-os-brick v0.0.6
+	github.com/whywaita/satelit v0.0.0-20200629011315-af9b8a815397
 	go.uber.org/zap v1.15.0
 	go.universe.tf/netboot v0.0.0-20200604010521-c56445963ec8
 	golang.org/x/sync v0.0.0-20200625203802-6e8e738ad208
