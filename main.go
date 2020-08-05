@@ -68,7 +68,7 @@ func run() error {
 	var (
 		satelitEndpoint string
 	)
-	flag.StringVar(&satelitEndpoint, "satelit", "172.0.0.1:9236", "satelit datastore api endpoint")
+	flag.StringVar(&satelitEndpoint, "satelit", "172.0.0.1:9263", "satelit datastore api endpoint")
 	flag.Parse()
 
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
