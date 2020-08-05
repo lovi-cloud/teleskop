@@ -14,7 +14,7 @@ import (
 )
 
 const domainTmplStr = `
-<domain type='kvm'>
+<domain type='kvm' xmlns:qemu='http://libvirt.org/schemas/domain/qemu/1.0'>
   <name>{{.Name}}</name>
   <memory unit='KiB'>{{.MemoryKib}}</memory>
   <currentMemory unit='KiB'>{{.MemoryKib}}</currentMemory>
@@ -81,6 +81,10 @@ const domainTmplStr = `
       <alias name='serial0'/>
     </console>
   </devices>
+  <qemu:commandline>
+    <qemu:arg value='-smbios'/>
+    <qemu:arg value='type=1,serial=ds=nocloud-net;s=http://169.254.169.254/'/>
+  </qemu:commandline>
 </domain>
 `
 
