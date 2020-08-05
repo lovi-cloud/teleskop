@@ -11,7 +11,7 @@ require (
 	github.com/grpc-ecosystem/go-grpc-middleware v1.2.1-0.20200613074404-b28fb2bb3547
 	github.com/mattn/go-colorable v0.1.7 // indirect
 	github.com/vishvananda/netlink v1.1.0
-	github.com/whywaita/go-os-brick v0.0.6
+	github.com/whywaita/go-os-brick v0.0.7-0.20200804151225-52af0fba06f6
 	github.com/whywaita/satelit v0.0.0-20200804092436-c3032545864e
 	go.uber.org/zap v1.15.0
 	go.universe.tf/netboot v0.0.0-20200604010521-c56445963ec8
