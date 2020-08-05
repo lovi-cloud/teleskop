@@ -355,6 +355,52 @@ func (a *agent) DetachInterface(ctx context.Context, req *pb.DetachInterfaceRequ
 	return &pb.DetachInterfaceResponse{}, nil
 }
 
+func (a *agent) GetVirtualMachine(ctx context.Context, req *pb.GetVirtualMachineRequest) (*pb.GetVirtualMachineResponse, error) {
+	domain, err := a.domainLookupByUUID(req.Uuid)
+	if err != nil {
+		return nil, err
+	}
+
+	state, _, err := a.libvirtClient.DomainGetState(*domain, 0)
+	if err != nil {
+		return nil, status.Errorf(codes.Internal, "failed to get domain state: %+v", err)
+	}
+
+	return &pb.GetVirtualMachineResponse{
+		VirtualMachine: &pb.VirtualMachine{
+			Uuid:  fmt.Sprintf("%x", domain.UUID),
+			Name:  domain.Name,
+			State: pb.VirtualMachine_State(state),
+		},
+	}, nil
+
+}
+
+func (a *agent) ListVirtualMachine(ctx context.Context, req *pb.ListVirtualMachineRequest) (*pb.ListVirtualMachineResponse, error) {
+	flags := libvirt.ConnectListDomainsActive | libvirt.ConnectListDomainsInactive
+	domains, _, err := a.libvirtClient.ConnectListAllDomains(1, flags)
+	if err != nil {
+		return nil, status.Errorf(codes.Internal, "failed to get domain list: %+v", err)
+	}
+
+	vms := make([]*pb.VirtualMachine, len(domains))
+	for i, domain := range domains {
+		state, _, err := a.libvirtClient.DomainGetState(domain, 0)
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "failed to get domain state: %+v", err)
+		}
+		vms[i] = &pb.VirtualMachine{
+			Uuid:  fmt.Sprintf("%x", domain.UUID),
+			Name:  domain.Name,
+			State: pb.VirtualMachine_State(state),
+		}
+	}
+
+	return &pb.ListVirtualMachineResponse{
+		VirtualMachines: vms,
+	}, nil
+}
+
 func (a *agent) getDomainState(ctx context.Context, domain libvirt.Domain) (int32, error) {
 	state, _, err := a.libvirtClient.DomainGetState(domain, 0)
 	if err != nil {
