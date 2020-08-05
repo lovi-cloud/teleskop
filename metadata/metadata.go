@@ -104,6 +104,17 @@ func (s *Server) userdataHandler() http.Handler {
 			return
 		}
 
+		nameResp, err := s.client.GetHostnameByAddress(r.Context(), &pb.GetHostnameByAddressRequest{
+			Address: addr.IP.String(),
+		})
+		if err != nil {
+			msg := fmt.Sprintf("failed to get hostname by address: %+v", err)
+			fmt.Fprintf(os.Stderr, "%s\n", msg)
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(msg))
+			return
+		}
+
 		userKeys, err := s.client.GetISUCONUserKeys(r.Context(), &pb.GetISUCONUserKeysRequest{
 			Address: addr.IP.String(),
 		})
@@ -125,6 +136,8 @@ func (s *Server) userdataHandler() http.Handler {
 
 		config := config{
 			ManageEtcHosts: true,
+			Hostname:       nameResp.Hostname,
+			FQDN:           nameResp.Hostname,
 			Users: []user{
 				{
 					Name:              "isucon",
@@ -149,6 +162,7 @@ func (s *Server) userdataHandler() http.Handler {
 			w.Write([]byte(msg))
 			return
 		}
+		out = append([]byte("#cloud-config\n"), out...)
 		w.Write(out)
 	})
 }
