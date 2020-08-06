@@ -23,6 +23,10 @@ service Agent {
   rpc ConnectBlockDevice(ConnectBlockDeviceRequest)
       returns (ConnectBlockDeviceResponse) {}
 
+  rpc GetVirtualMachineState(GetVirtualMachineStateRequest)
+      returns (GetVirtualMachineStateResponse) {}
+  rpc ListVirtualMachineState(ListVirtualMachineStateRequest)
+      returns (ListVirtualMachineStateResponse) {}
   rpc StartVirtualMachine(StartVirtualMachineRequest)
       returns (StartVirtualMachineResponse) {}
   rpc AttachBlockDevice(AttachBlockDeviceRequest)
@@ -46,6 +50,22 @@ service Agent {
       returns (DetachBlockDeviceResponse) {}
   rpc DetachInterface(DetachInterfaceRequest)
       returns (DetachInterfaceResponse) {}
+}
+
+message VirtualMachineState {
+  string uuid = 1;
+  string name = 2;
+  enum State {
+    NO_STATE     = 0;
+    RUNNING      = 1;
+    BLOCKED      = 2;
+    PAUSED       = 3;
+    SHUTDOWN     = 4;
+    SHUTOFF      = 5;
+    CRASHED      = 6;
+    PM_SUSPENDED = 7;
+  }
+  State state = 3;
 }
 
 message GetISCSIQualifiedNameRequest {}
@@ -106,6 +126,12 @@ message AttachInterfaceRequest {
 message StartVirtualMachineRequest {
   string uuid = 1;
 }
+
+message GetVirtualMachineStateRequest {
+  string uuid = 1;
+}
+
+message ListVirtualMachineStateRequest {}
 
 message DeleteBridgeRequest {
   string name = 1;
@@ -178,6 +204,14 @@ message ConnectBlockDeviceResponse {
 message StartVirtualMachineResponse {
   string uuid = 1;
   string name = 2;
+}
+
+message GetVirtualMachineStateResponse {
+  VirtualMachineState state = 1;
+}
+
+message ListVirtualMachineStateResponse {
+  repeated VirtualMachineState states = 1;
 }
 
 message AttachBlockDeviceResponse {
