@@ -65,7 +65,7 @@ func (s *Server) ListenAndServe() error {
 			continue
 		}
 	}
-	return nil
+	// return nil
 }
 
 func makeResponse(intf net.Interface, req dhcp4.Packet, lease *pb.DHCPLease) (*dhcp4.Packet, error) {
@@ -73,17 +73,18 @@ func makeResponse(intf net.Interface, req dhcp4.Packet, lease *pb.DHCPLease) (*d
 	if err != nil {
 		return nil, fmt.Errorf("failed to get interface address: %w", err)
 	}
-	var serverAddr *net.IP
+	var sAddr *net.IP
 	for _, addr := range addrs {
 		ip, _, err := net.ParseCIDR(addr.String())
 		if err != nil || ip.To4() == nil {
 			continue
 		}
-		serverAddr = &ip
+		sAddr = &ip
 	}
-	if serverAddr == nil {
+	if sAddr == nil {
 		return nil, fmt.Errorf("failed to parse interface address: %w", err)
 	}
+	serverAddr := sAddr.To4()
 
 	yourAddr := net.ParseIP(lease.Ip)
 	if yourAddr == nil {
@@ -100,13 +101,13 @@ func makeResponse(intf net.Interface, req dhcp4.Packet, lease *pb.DHCPLease) (*d
 		Broadcast:      req.Broadcast,
 		HardwareAddr:   req.HardwareAddr,
 		YourAddr:       yourAddr,
-		ServerAddr:     *serverAddr,
+		ServerAddr:     serverAddr,
 		RelayAddr:      req.RelayAddr,
 		BootServerName: serverAddr.String(),
 	}
 	options := make(dhcp4.Options)
 	options[dhcp4.OptSubnetMask] = netmask.Mask
-	options[dhcp4.OptServerIdentifier] = *serverAddr
+	options[dhcp4.OptServerIdentifier] = serverAddr
 
 	buff := make([]byte, 4)
 	binary.BigEndian.PutUint32(buff, 4294967295)

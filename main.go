@@ -4,10 +4,13 @@ package main
 
 import (
 	"context"
+	"flag"
 	"fmt"
 	"net"
 	"os"
 	"time"
+
+	"github.com/whywaita/teleskop/metadata"
 
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
@@ -29,8 +32,6 @@ const (
 )
 
 type agent struct {
-	pb.UnimplementedAgentServer
-
 	libvirtClient *libvirt.Libvirt
 	dhcpServer    *dhcp.Server
 }
@@ -64,6 +65,12 @@ func initLogger() (*zap.Logger, error) {
 }
 
 func run() error {
+	var (
+		satelitEndpoint string
+	)
+	flag.StringVar(&satelitEndpoint, "satelit", "172.0.0.1:9263", "satelit datastore api endpoint")
+	flag.Parse()
+
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -95,8 +102,9 @@ func run() error {
 	}
 
 	grpcConn, err := grpc.DialContext(ctx,
-		"10.197.32.54:9263",
+		satelitEndpoint,
 		grpc.WithInsecure(),
+		grpc.WithBlock(),
 	)
 	if err != nil {
 		return fmt.Errorf("failed to dial to satelit datastore api: %w", err)
@@ -128,6 +136,7 @@ func run() error {
 		libvirtClient: libvirtClient,
 		dhcpServer:    dhcpServer,
 	})
+	metadataServer := metadata.New(datastoreClient)
 
 	eg, ctx := errgroup.WithContext(ctx)
 	eg.Go(func() error {
@@ -137,6 +146,10 @@ func run() error {
 	eg.Go(func() error {
 		fmt.Printf("listening on address %s\n", "0.0.0.0:67")
 		return dhcpServer.ListenAndServe()
+	})
+	eg.Go(func() error {
+		fmt.Printf("listening on address %s\n", "0.0.0.0:80")
+		return metadataServer.Serve(context.Background(), "0.0.0.0:80")
 	})
 
 	return eg.Wait()
