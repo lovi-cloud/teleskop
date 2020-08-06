@@ -23,10 +23,10 @@ service Agent {
   rpc ConnectBlockDevice(ConnectBlockDeviceRequest)
       returns (ConnectBlockDeviceResponse) {}
 
-  rpc GetVirtualMachine(GetVirtualMachineRequest)
-      returns (GetVirtualMachineResponse) {}
-  rpc ListVirtualMachine(ListVirtualMachineRequest)
-      returns (ListVirtualMachineResponse) {}
+  rpc GetVirtualMachineState(GetVirtualMachineStateRequest)
+      returns (GetVirtualMachineStateResponse) {}
+  rpc ListVirtualMachineState(ListVirtualMachineStateRequest)
+      returns (ListVirtualMachineStateResponse) {}
   rpc StartVirtualMachine(StartVirtualMachineRequest)
       returns (StartVirtualMachineResponse) {}
   rpc AttachBlockDevice(AttachBlockDeviceRequest)
@@ -52,7 +52,7 @@ service Agent {
       returns (DetachInterfaceResponse) {}
 }
 
-message VirtualMachine {
+message VirtualMachineState {
   string uuid = 1;
   string name = 2;
   enum State {
@@ -127,11 +127,11 @@ message StartVirtualMachineRequest {
   string uuid = 1;
 }
 
-message GetVirtualMachineRequest {
+message GetVirtualMachineStateRequest {
   string uuid = 1;
 }
 
-message ListVirtualMachineRequest {}
+message ListVirtualMachineStateRequest {}
 
 message DeleteBridgeRequest {
   string name = 1;
@@ -206,12 +206,12 @@ message StartVirtualMachineResponse {
   string name = 2;
 }
 
-message GetVirtualMachineResponse {
-  VirtualMachine virtual_machine = 1;
+message GetVirtualMachineStateResponse {
+  VirtualMachineState state = 1;
 }
 
-message ListVirtualMachineResponse {
-  repeated VirtualMachine virtual_machines = 1;
+message ListVirtualMachineStateResponse {
+  repeated VirtualMachineState states = 1;
 }
 
 message AttachBlockDeviceResponse {
