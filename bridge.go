@@ -45,6 +45,12 @@ func (a *agent) AddBridge(ctx context.Context, req *pb.AddBridgeRequest) (*pb.Ad
 		}
 	}
 
+	_, err = a.libvirtClient.NetworkLookupByName(req.Name)
+	if err == nil {
+		// TODO: already exists
+		return &pb.AddBridgeResponse{}, nil
+	}
+
 	var buff bytes.Buffer
 	if err := networkTmpl.Execute(&buff, req); err != nil {
 		return nil, status.Errorf(codes.Internal, "failed to execute network template: %+v", err)
@@ -74,7 +80,8 @@ func (a *agent) AddBridge(ctx context.Context, req *pb.AddBridgeRequest) (*pb.Ad
 func (a *agent) DeleteBridge(ctx context.Context, req *pb.DeleteBridgeRequest) (*pb.DeleteBridgeResponse, error) {
 	network, err := a.libvirtClient.NetworkLookupByName(req.Name)
 	if err != nil {
-		return nil, status.Errorf(codes.NotFound, "failed to find network: %+v", err)
+		// TODO: not found
+		return &pb.DeleteBridgeResponse{}, nil
 	}
 
 	if err := a.libvirtClient.NetworkDestroy(network); err != nil {
