@@ -112,6 +112,11 @@ func (a *agent) AddInterfaceToBridge(ctx context.Context, req *pb.AddInterfaceTo
 		return nil, status.Errorf(codes.NotFound, "failed to find interface: %+v", err)
 	}
 
+	if link.Attrs().MasterIndex != 0 {
+		// TODO: already added
+		return &pb.AddInterfaceToBridgeResponse{}, nil
+	}
+
 	if err := netlink.LinkSetMaster(link, bridge); err != nil {
 		return nil, status.Errorf(codes.Internal, "failed to add interface to bridge: %+v", err)
 	}
