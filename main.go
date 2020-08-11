@@ -10,6 +10,8 @@ import (
 	"os"
 	"time"
 
+	"github.com/vishvananda/netlink"
+
 	"github.com/whywaita/teleskop/metadata"
 
 	"go.uber.org/zap"
@@ -32,8 +34,9 @@ const (
 )
 
 type agent struct {
-	libvirtClient *libvirt.Libvirt
-	dhcpServer    *dhcp.Server
+	libvirtClient   *libvirt.Libvirt
+	datastoreClient dspb.SatelitDatastoreClient
+	dhcpServer      *dhcp.Server
 }
 
 func main() {
@@ -132,13 +135,37 @@ func run() error {
 		),
 	)
 	dhcpServer := dhcp.NewServer(datastoreClient)
-	pb.RegisterAgentServer(grpcServer, &agent{
-		libvirtClient: libvirtClient,
-		dhcpServer:    dhcpServer,
-	})
+	agent := &agent{
+		libvirtClient:   libvirtClient,
+		datastoreClient: datastoreClient,
+		dhcpServer:      dhcpServer,
+	}
+	pb.RegisterAgentServer(grpcServer, agent)
 	metadataServer := metadata.New(datastoreClient)
 
 	eg, ctx := errgroup.WithContext(ctx)
+	eg.Go(func() error {
+		hostname, err := os.Hostname()
+		if err != nil {
+			return err
+		}
+		link, err := netlink.LinkByName("bond0.1516")
+		if err != nil {
+			return err
+		}
+		addrs, err := netlink.AddrList(link, netlink.FAMILY_V4)
+		if err != nil {
+			return err
+		}
+		endpoint := ""
+		for _, addr := range addrs {
+			if ip := addr.IP.To4(); ip != nil {
+				endpoint = fmt.Sprintf("%s:%d", ip.String(), 5000)
+				break
+			}
+		}
+		return agent.setup(ctx, hostname, endpoint)
+	})
 	eg.Go(func() error {
 		fmt.Printf("listening on address %s\n", listenAddress)
 		return grpcServer.Serve(lis)
