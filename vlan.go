@@ -12,6 +12,12 @@ import (
 )
 
 func (a *agent) AddVLANInterface(ctx context.Context, req *pb.AddVLANInterfaceRequest) (*pb.AddVLANInterfaceResponse, error) {
+	_, err := netlink.LinkByName(fmt.Sprintf("%s.%d", req.ParentInterface, req.VlanId))
+	if err == nil {
+		// TODO: already exist
+		return &pb.AddVLANInterfaceResponse{}, nil
+	}
+
 	parentLink, err := netlink.LinkByName(req.ParentInterface)
 	if err != nil {
 		return nil, status.Errorf(codes.NotFound, "failed to find parent interface: %+v\n", err)
