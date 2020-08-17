@@ -47,11 +47,6 @@ const domainTmplStr = `
   <on_crash>destroy</on_crash>
   <devices>
     <emulator>/usr/bin/kvm-spice</emulator>
-    <disk type='block' device='disk'>
-      <driver name='qemu' type='raw' cache='none' io='native' discard='unmap'/>
-      <source dev='{{.BootDevice}}'/>
-      <target dev='vda' bus='virtio'/>
-    </disk>
     <controller type='usb' index='0' model='piix3-uhci'>
       <alias name='usb'/>
     </controller>
@@ -148,6 +143,21 @@ func (a *agent) AddVirtualMachine(ctx context.Context, req *pb.AddVirtualMachine
 	}
 
 	fmt.Printf("creating domain: %s\t%x\n", domain.Name, domain.UUID)
+
+	if req.BootDevice != "" {
+		_, err = a.AttachBlockDevice(ctx, &pb.AttachBlockDeviceRequest{
+			Uuid:          fmt.Sprintf("%x", domain.UUID),
+			SourceDevice:  req.BootDevice,
+			TargetDevice:  "vda",
+			ReadBytesSec:  req.ReadBytesSec,
+			WriteBytesSec: req.WriteBytesSec,
+			ReadIopsSec:   req.ReadIopsSec,
+			WriteIopsSec:  req.WriteIopsSec,
+		})
+		if err != nil {
+			return nil, status.Errorf(codes.InvalidArgument, "failed to attach boot device: %+v", err)
+		}
+	}
 
 	return &pb.AddVirtualMachineResponse{
 		Uuid: fmt.Sprintf("%x", domain.UUID),

@@ -97,10 +97,14 @@ message AddInterfaceToBridgeRequest {
 }
 
 message AddVirtualMachineRequest {
-  string name        = 1;
-  uint32 vcpus       = 2;
-  uint64 memory_kib  = 3;
-  string boot_device = 4;
+  string name            = 1;
+  uint32 vcpus           = 2;
+  uint64 memory_kib      = 3;
+  string boot_device     = 4;
+  uint32 read_bytes_sec  = 5;
+  uint32 write_bytes_sec = 6;
+  uint32 read_iops_sec   = 7;
+  uint32 write_iops_sec  = 8;
 }
 
 message ConnectBlockDeviceRequest {
