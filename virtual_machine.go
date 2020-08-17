@@ -92,6 +92,12 @@ const diskTmplStr = `
 <disk type='block'>
   <source dev='{{.SourceDevice}}'/>
   <target dev='{{.TargetDevice}}'/>
+  <iotune>
+  {{ if gt .ReadBytesSec 0 }}<read_bytes_sec>{{ .ReadBytesSec }}</read_bytes_sec>{{ end }}
+  {{ if gt .WriteBytesSec 0 }}<write_bytes_sec>{{ .WriteBytesSec }}</write_bytes_sec>{{ end }}
+  {{ if gt .ReadIopsSec 0 }}<read_iops_sec>{{ .ReadIopsSec }}</read_iops_sec>{{ end }}
+  {{ if gt .WriteIopsSSec 0 }}<write_iops_sec>{{ .WriteIopsSec }}</write_iops_sec>{{ end }}
+  </iotune>
 </disk>
 `
 

@@ -109,9 +109,13 @@ message ConnectBlockDeviceRequest {
 }
 
 message AttachBlockDeviceRequest {
-  string uuid          = 1;
-  string source_device = 2;
-  string target_device = 3;
+  string uuid            = 1;
+  string source_device   = 2;
+  string target_device   = 3;
+  uint32 read_bytes_sec  = 4;
+  uint32 write_bytes_sec = 5;
+  uint32 read_iops_sec   = 6;
+  uint32 write_iops_sec  = 7;
 }
 
 message AttachInterfaceRequest {
