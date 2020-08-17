@@ -47,11 +47,6 @@ const domainTmplStr = `
   <on_crash>destroy</on_crash>
   <devices>
     <emulator>/usr/bin/kvm-spice</emulator>
-    <disk type='block' device='disk'>
-      <driver name='qemu' type='raw' cache='none' io='native' discard='unmap'/>
-      <source dev='{{.BootDevice}}'/>
-      <target dev='vda' bus='virtio'/>
-    </disk>
     <controller type='usb' index='0' model='piix3-uhci'>
       <alias name='usb'/>
     </controller>
@@ -88,7 +83,20 @@ const domainTmplStr = `
 </domain>
 `
 
-const diskTmplStr = `
+const attachDiskTmplStr = `
+<disk type='block'>
+  <source dev='{{.SourceDevice}}'/>
+  <target dev='{{.TargetDevice}}'/>
+  <iotune>
+  {{ if gt .ReadBytesSec 0 }}<read_bytes_sec>{{ .ReadBytesSec }}</read_bytes_sec>{{ end }}
+  {{ if gt .WriteBytesSec 0 }}<write_bytes_sec>{{ .WriteBytesSec }}</write_bytes_sec>{{ end }}
+  {{ if gt .ReadIopsSec 0 }}<read_iops_sec>{{ .ReadIopsSec }}</read_iops_sec>{{ end }}
+  {{ if gt .WriteIopsSec 0 }}<write_iops_sec>{{ .WriteIopsSec }}</write_iops_sec>{{ end }}
+  </iotune>
+</disk>
+`
+
+const detachDiskTmplStr = `
 <disk type='block'>
   <source dev='{{.SourceDevice}}'/>
   <target dev='{{.TargetDevice}}'/>
@@ -109,9 +117,10 @@ const interfaceTmplStr = `
 `
 
 var (
-	domainTmpl    *template.Template
-	diskTmpl      *template.Template
-	interfaceTmpl *template.Template
+	domainTmpl     *template.Template
+	attachDiskTmpl *template.Template
+	detachDiskTmpl *template.Template
+	interfaceTmpl  *template.Template
 )
 
 func (a *agent) AddVirtualMachine(ctx context.Context, req *pb.AddVirtualMachineRequest) (*pb.AddVirtualMachineResponse, error) {
@@ -134,6 +143,21 @@ func (a *agent) AddVirtualMachine(ctx context.Context, req *pb.AddVirtualMachine
 	}
 
 	fmt.Printf("creating domain: %s\t%x\n", domain.Name, domain.UUID)
+
+	if req.BootDevice != "" {
+		_, err = a.AttachBlockDevice(ctx, &pb.AttachBlockDeviceRequest{
+			Uuid:          fmt.Sprintf("%x", domain.UUID),
+			SourceDevice:  req.BootDevice,
+			TargetDevice:  "vda",
+			ReadBytesSec:  req.ReadBytesSec,
+			WriteBytesSec: req.WriteBytesSec,
+			ReadIopsSec:   req.ReadIopsSec,
+			WriteIopsSec:  req.WriteIopsSec,
+		})
+		if err != nil {
+			return nil, status.Errorf(codes.InvalidArgument, "failed to attach boot device: %+v", err)
+		}
+	}
 
 	return &pb.AddVirtualMachineResponse{
 		Uuid: fmt.Sprintf("%x", domain.UUID),
@@ -165,16 +189,16 @@ func (a *agent) AttachBlockDevice(ctx context.Context, req *pb.AttachBlockDevice
 		return nil, err
 	}
 
-	if diskTmpl == nil {
-		tmp, err := template.New("diskTmpl").Parse(diskTmplStr)
+	if attachDiskTmpl == nil {
+		tmp, err := template.New("attachDiskTmpl").Parse(attachDiskTmplStr)
 		if err != nil {
 			return nil, status.Errorf(codes.Internal, "failed to parse disk template: %+v", err)
 		}
-		diskTmpl = tmp
+		attachDiskTmpl = tmp
 	}
 
 	var buff bytes.Buffer
-	if err := diskTmpl.Execute(&buff, req); err != nil {
+	if err := attachDiskTmpl.Execute(&buff, req); err != nil {
 		return nil, status.Errorf(codes.InvalidArgument, "failed to exec disk template: %+v", err)
 	}
 
@@ -281,16 +305,16 @@ func (a *agent) DetachBlockDevice(ctx context.Context, req *pb.DetachBlockDevice
 		return nil, err
 	}
 
-	if diskTmpl == nil {
-		tmp, err := template.New("diskTmpl").Parse(diskTmplStr)
+	if detachDiskTmpl == nil {
+		tmp, err := template.New("detachDiskTmpl").Parse(detachDiskTmplStr)
 		if err != nil {
 			return nil, status.Errorf(codes.Internal, "failed to parse disk template: %+v", err)
 		}
-		diskTmpl = tmp
+		detachDiskTmpl = tmp
 	}
 
 	var buff bytes.Buffer
-	if err := diskTmpl.Execute(&buff, req); err != nil {
+	if err := detachDiskTmpl.Execute(&buff, req); err != nil {
 		return nil, status.Errorf(codes.InvalidArgument, "failed to exec disk template: %+v", err)
 	}
 
