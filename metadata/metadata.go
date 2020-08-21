@@ -135,7 +135,7 @@ func (s *Server) userdataHandler() http.Handler {
 		}
 
 		config := config{
-			ManageEtcHosts: true,
+			ManageEtcHosts: false,
 			Hostname:       nameResp.Hostname,
 			FQDN:           nameResp.Hostname,
 			Users: []user{
