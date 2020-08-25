@@ -231,6 +231,7 @@ github.com/whywaita/go-os-brick v0.0.6-0.20200729104728-8daf538f9081 h1:XXnpPxen
 github.com/whywaita/go-os-brick v0.0.6-0.20200729104728-8daf538f9081/go.mod h1:R8e7Ti7TnHq3RUsSvcPD7utqUyQU3qH42VEQKRpFkhE=
 github.com/whywaita/go-os-brick v0.0.7 h1:ccJssKc0Vr++YdnwG4czobaGur4+vFGqG3krKYZR73s=
 github.com/whywaita/go-os-brick v0.0.7/go.mod h1:SqVT1Gtz6a9eie4tNQsgxECkJ5LWongNFhw6iuj2IKg=
+github.com/whywaita/go-os-brick v0.0.8/go.mod h1:SqVT1Gtz6a9eie4tNQsgxECkJ5LWongNFhw6iuj2IKg=
 github.com/whywaita/satelit v0.0.0-20200629011315-af9b8a815397 h1:+Pq0BnJf1GfGiSCFRVrffjbYjoSQDjO+NbvrZLVqqGI=
 github.com/whywaita/satelit v0.0.0-20200629011315-af9b8a815397/go.mod h1:wBAQMYTXiIAr0wMr6pJxy+P+ULtLfdEYPhJd11m/TaY=
 github.com/whywaita/satelit v0.0.0-20200811075629-01e2712998d9 h1:GeyGDHKjUy6RffcSnmSGo8D0wdBeSejKJtuewwjLqbU=
