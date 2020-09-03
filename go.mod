@@ -10,7 +10,7 @@ require (
 	github.com/grpc-ecosystem/go-grpc-middleware v1.2.1
 	github.com/vishvananda/netlink v1.1.0
 	github.com/whywaita/go-os-brick v0.0.8
-	github.com/whywaita/satelit v0.0.0-20200903034503-a03bb49bcd8a
+	github.com/whywaita/satelit v0.0.0-20200903102924-3037df86e423
 	go.uber.org/zap v1.15.0
 	go.universe.tf/netboot v0.0.0-20200701170418-ddb47796bc4c
 	golang.org/x/sync v0.0.0-20200625203802-6e8e738ad208

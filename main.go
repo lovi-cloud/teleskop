@@ -179,5 +179,10 @@ func run() error {
 		return metadataServer.Serve(context.Background(), "0.0.0.0:80")
 	})
 
-	return eg.Wait()
+	if err := eg.Wait(); err != nil {
+		logger.Warn(fmt.Sprintf("failed to deamons: %+v", err))
+		return err
+	}
+
+	return nil
 }

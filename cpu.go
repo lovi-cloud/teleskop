@@ -74,10 +74,10 @@ func NewNode(physicalCoreList, logicalCoreList []uint32) (*pb.NumaNode, error) {
 
 	node := pb.NumaNode{
 		Pairs:           make([]*pb.CorePair, len(physicalCoreList)),
-		PhysicalCoreMin: math.MaxInt64,
-		PhysicalCoreMax: math.MinInt64,
-		LogicalCoreMin:  math.MaxInt64,
-		LogicalCoreMax:  math.MinInt64,
+		PhysicalCoreMin: math.MaxUint32,
+		PhysicalCoreMax: 0,
+		LogicalCoreMin:  math.MaxUint32,
+		LogicalCoreMax:  0,
 	}
 	for _, pc := range physicalCoreList {
 		if pc < node.PhysicalCoreMin {
