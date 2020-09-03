@@ -42,9 +42,15 @@ func (a *agent) setup(ctx context.Context, hostname, endpoint string) error {
 		}
 	}
 
+	numaNodes, err := GetLocalNUMANodes()
+	if err != nil {
+		return err
+	}
+
 	_, err = a.datastoreClient.RegisterTeleskopAgent(ctx, &dspb.RegisterTeleskopAgentRequest{
 		Hostname: hostname,
 		Endpoint: endpoint,
+		Nodes: numaNodes,
 	})
 	if err != nil {
 		return err
