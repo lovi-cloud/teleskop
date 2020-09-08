@@ -4,12 +4,15 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"os"
+	"strings"
 	"text/template"
 
 	libvirt "github.com/digitalocean/go-libvirt"
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
+	dspb "github.com/whywaita/satelit/api/satelit_datastore"
 	pb "github.com/whywaita/teleskop/protoc/agent"
 )
 
@@ -19,6 +22,11 @@ const domainTmplStr = `
   <memory unit='KiB'>{{.MemoryKib}}</memory>
   <currentMemory unit='KiB'>{{.MemoryKib}}</currentMemory>
   <vcpu placement='static'>{{.Vcpus}}</vcpu>
+  <cputune>
+{{- range $i, $CPUSet := .CPUSets }}
+    <vcpupin vcpu='{{ $i }}' cpuset='{{ $CPUSet }}'/>
+{{- end }}
+  </cputune>
   <resource>
     <partition>/machine</partition>
   </resource>
@@ -123,6 +131,11 @@ var (
 	interfaceTmpl  *template.Template
 )
 
+type domainParams struct {
+	*pb.AddVirtualMachineRequest
+	CPUSets []string
+}
+
 func (a *agent) AddVirtualMachine(ctx context.Context, req *pb.AddVirtualMachineRequest) (*pb.AddVirtualMachineResponse, error) {
 	if domainTmpl == nil {
 		tmp, err := template.New("domainTmpl").Parse(domainTmplStr)
@@ -132,8 +145,38 @@ func (a *agent) AddVirtualMachine(ctx context.Context, req *pb.AddVirtualMachine
 		domainTmpl = tmp
 	}
 
+	param := &domainParams{
+		AddVirtualMachineRequest: req,
+		CPUSets:                  []string{},
+	}
+	if req.PinningGroupName != "" {
+		hostname, err := os.Hostname()
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "failed to get hostname: %+v", err)
+		}
+		cores, err := a.datastoreClient.GetCPUCoreByPinningGroup(ctx, &dspb.GetCPUCoreByPinningGroupRequest{
+			Hostname:         hostname,
+			PinningGroupName: req.PinningGroupName,
+		})
+		if err != nil {
+			return nil, status.Errorf(codes.Internal, "failed to get pinning group: %+v", err)
+		}
+		cpuset := ""
+		for _, pair := range cores.Pairs {
+			cpuset = strings.Join([]string{
+				cpuset,
+				fmt.Sprintf("%d", pair.PhysicalCore),
+				fmt.Sprintf("%d", pair.LogicalCore),
+			}, ",")
+		}
+		param.CPUSets = make([]string, req.Vcpus)
+		for i := 0; i < int(req.Vcpus); i++ {
+			param.CPUSets[i] = cpuset
+		}
+	}
+
 	var buff bytes.Buffer
-	if err := domainTmpl.Execute(&buff, req); err != nil {
+	if err := domainTmpl.Execute(&buff, param); err != nil {
 		return nil, status.Errorf(codes.Internal, "failed to exec domain template: %+v", err)
 	}
 

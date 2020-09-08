@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 
+	"github.com/whywaita/go-os-brick/osbrick"
+
 	dspb "github.com/whywaita/satelit/api/satelit_datastore"
 	pb "github.com/whywaita/teleskop/protoc/agent"
 )
@@ -42,9 +44,21 @@ func (a *agent) setup(ctx context.Context, hostname, endpoint string) error {
 		}
 	}
 
+	numaNodes, err := GetLocalNUMANodes()
+	if err != nil {
+		return err
+	}
+
+	iqn, err := osbrick.GetIQN(ctx)
+	if err != nil {
+		return err
+	}
+
 	_, err = a.datastoreClient.RegisterTeleskopAgent(ctx, &dspb.RegisterTeleskopAgentRequest{
 		Hostname: hostname,
 		Endpoint: endpoint,
+		Iqn:      iqn,
+		Nodes:    numaNodes,
 	})
 	if err != nil {
 		return err
