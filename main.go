@@ -69,9 +69,11 @@ func initLogger() (*zap.Logger, error) {
 
 func run() error {
 	var (
-		satelitEndpoint string
+		satelitEndpoint   string
+		teleskopInterface string
 	)
 	flag.StringVar(&satelitEndpoint, "satelit", "172.0.0.1:9263", "satelit datastore api endpoint")
+	flag.StringVar(&teleskopInterface, "intf", "bond0.1000", "teleskop listen interface")
 	flag.Parse()
 
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
@@ -149,7 +151,7 @@ func run() error {
 		if err != nil {
 			return err
 		}
-		link, err := netlink.LinkByName("bond0.1516")
+		link, err := netlink.LinkByName(teleskopInterface)
 		if err != nil {
 			return err
 		}
@@ -163,6 +165,9 @@ func run() error {
 				endpoint = fmt.Sprintf("%s:%d", ip.String(), 5000)
 				break
 			}
+		}
+		if len(endpoint) == 0 {
+			return fmt.Errorf("failed to find valid address on interface=%s", teleskopInterface)
 		}
 		return agent.setup(ctx, hostname, endpoint)
 	})
