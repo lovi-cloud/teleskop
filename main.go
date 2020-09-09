@@ -72,7 +72,7 @@ func run() error {
 		satelitEndpoint   string
 		teleskopInterface string
 	)
-	flag.StringVar(&satelitEndpoint, "satelit", "172.0.0.1:9263", "satelit datastore api endpoint")
+	flag.StringVar(&satelitEndpoint, "satelit", "127.0.0.1:9263", "satelit datastore api endpoint")
 	flag.StringVar(&teleskopInterface, "intf", "bond0.1000", "teleskop listen interface")
 	flag.Parse()
 
