@@ -76,6 +76,14 @@ func run() error {
 	flag.StringVar(&teleskopInterface, "intf", "bond0.1000", "teleskop listen interface")
 	flag.Parse()
 
+	links, err := netlink.LinkList()
+	if err != nil {
+		return err
+	}
+	if !isValidLinkName(links, teleskopInterface) {
+		return fmt.Errorf("invalid interface name: intf=%s", teleskopInterface)
+	}
+
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -190,4 +198,13 @@ func run() error {
 	}
 
 	return nil
+}
+
+func isValidLinkName(links []netlink.Link, name string) bool {
+	for _, link := range links {
+		if link.Attrs().Name == name {
+			return true
+		}
+	}
+	return false
 }
