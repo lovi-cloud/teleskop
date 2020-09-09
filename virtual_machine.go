@@ -163,11 +163,11 @@ func (a *agent) AddVirtualMachine(ctx context.Context, req *pb.AddVirtualMachine
 		}
 		cpuset := ""
 		for _, pair := range cores.Pairs {
-			cpuset = strings.Join([]string{
-				cpuset,
-				fmt.Sprintf("%d", pair.PhysicalCore),
-				fmt.Sprintf("%d", pair.LogicalCore),
-			}, ",")
+			words := []string{fmt.Sprintf("%d", pair.PhysicalCore), fmt.Sprintf("%d", pair.LogicalCore)}
+			if len(cpuset) != 0 {
+				words = append(words, cpuset)
+			}
+			cpuset = strings.Join(words, ",")
 		}
 		param.CPUSets = make([]string, req.Vcpus)
 		for i := 0; i < int(req.Vcpus); i++ {
