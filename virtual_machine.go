@@ -163,11 +163,11 @@ func (a *agent) AddVirtualMachine(ctx context.Context, req *pb.AddVirtualMachine
 		}
 		cpuset := ""
 		for _, pair := range cores.Pairs {
-			cpuset = strings.Join([]string{
-				cpuset,
-				fmt.Sprintf("%d", pair.PhysicalCore),
-				fmt.Sprintf("%d", pair.LogicalCore),
-			}, ",")
+			words := []string{fmt.Sprintf("%d", pair.PhysicalCore), fmt.Sprintf("%d", pair.LogicalCore)}
+			if len(cpuset) != 0 {
+				words = append(words, cpuset)
+			}
+			cpuset = strings.Join(words, ",")
 		}
 		param.CPUSets = make([]string, req.Vcpus)
 		for i := 0; i < int(req.Vcpus); i++ {
@@ -182,7 +182,7 @@ func (a *agent) AddVirtualMachine(ctx context.Context, req *pb.AddVirtualMachine
 
 	domain, err := a.libvirtClient.DomainDefineXML(buff.String())
 	if err != nil {
-		return nil, status.Errorf(codes.InvalidArgument, "failed to define domain: %+v", err)
+		return nil, status.Errorf(codes.InvalidArgument, "failed to define domain: %+v xml=%s", err, buff.String())
 	}
 
 	fmt.Printf("creating domain: %s\t%x\n", domain.Name, domain.UUID)
