@@ -167,17 +167,12 @@ func run() error {
 		if err != nil {
 			return err
 		}
-		endpoint := ""
 		for _, addr := range addrs {
 			if ip := addr.IP.To4(); ip != nil {
-				endpoint = fmt.Sprintf("%s:%d", ip.String(), 5000)
-				break
+				return agent.setup(ctx, hostname, fmt.Sprintf("%s:%d", ip.String(), 5000))
 			}
 		}
-		if len(endpoint) == 0 {
-			return fmt.Errorf("failed to find valid address on interface=%s", teleskopInterface)
-		}
-		return agent.setup(ctx, hostname, endpoint)
+		return fmt.Errorf("failed to find valid address on interface=%s", teleskopInterface)
 	})
 	eg.Go(func() error {
 		fmt.Printf("listening on address %s\n", listenAddress)
