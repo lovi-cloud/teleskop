@@ -76,6 +76,14 @@ func run() error {
 	flag.StringVar(&teleskopInterface, "intf", "bond0.1000", "teleskop listen interface")
 	flag.Parse()
 
+	links, err := netlink.LinkList()
+	if err != nil {
+		return err
+	}
+	if !isValidLinkName(links, teleskopInterface) {
+		return fmt.Errorf("invalid interface name: intf=%s", teleskopInterface)
+	}
+
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -159,17 +167,12 @@ func run() error {
 		if err != nil {
 			return err
 		}
-		endpoint := ""
 		for _, addr := range addrs {
 			if ip := addr.IP.To4(); ip != nil {
-				endpoint = fmt.Sprintf("%s:%d", ip.String(), 5000)
-				break
+				return agent.setup(ctx, hostname, fmt.Sprintf("%s:%d", ip.String(), 5000))
 			}
 		}
-		if len(endpoint) == 0 {
-			return fmt.Errorf("failed to find valid address on interface=%s", teleskopInterface)
-		}
-		return agent.setup(ctx, hostname, endpoint)
+		return fmt.Errorf("failed to find valid address on interface=%s", teleskopInterface)
 	})
 	eg.Go(func() error {
 		fmt.Printf("listening on address %s\n", listenAddress)
@@ -190,4 +193,13 @@ func run() error {
 	}
 
 	return nil
+}
+
+func isValidLinkName(links []netlink.Link, name string) bool {
+	for _, link := range links {
+		if link.Attrs().Name == name {
+			return true
+		}
+	}
+	return false
 }
