@@ -9,6 +9,8 @@ import (
 	"net/http/httptest"
 	"os"
 
+	"github.com/whywaita/teleskop/metadata/team"
+
 	yaml "gopkg.in/yaml.v2"
 
 	pb "github.com/whywaita/satelit/api/satelit_datastore"
@@ -37,6 +39,7 @@ func (s *Server) Serve(ctx context.Context, addr string) error {
 	mux.Handle("/", s.loggingHandler(http.NotFoundHandler()))
 	mux.Handle("/meta-data", s.loggingHandler(s.metadataHandler()))
 	mux.Handle("/user-data", s.loggingHandler(s.userdataHandler()))
+	mux.Handle("/teamid", s.loggingHandler(s.teamIDHandler()))
 	srv := http.Server{
 		Handler: mux,
 	}
@@ -164,6 +167,30 @@ func (s *Server) userdataHandler() http.Handler {
 		}
 		out = append([]byte("#cloud-config\n"), out...)
 		w.Write(out)
+	})
+}
+
+func (s *Server) teamIDHandler() http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		addr, err := net.ResolveTCPAddr("tcp", r.RemoteAddr)
+		if err != nil {
+			msg := fmt.Sprintf("failed to parse request address: %+v", err)
+			fmt.Fprintf(os.Stderr, "%s\n", msg)
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(msg))
+			return
+		}
+
+		teamID, err := team.GetTeamID(addr.IP.String())
+		if err != nil {
+			msg := fmt.Sprintf("failed to get teamID: %+v", err)
+			fmt.Fprintf(os.Stderr, "%s\n", msg)
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(msg))
+			return
+		}
+		w.Write([]byte(fmt.Sprintf("%d", teamID)))
+		return
 	})
 }
 
