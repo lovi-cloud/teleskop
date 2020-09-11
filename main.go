@@ -69,11 +69,15 @@ func initLogger() (*zap.Logger, error) {
 
 func run() error {
 	var (
-		satelitEndpoint   string
-		teleskopInterface string
+		satelitEndpoint    string
+		teleskopInterface  string
+		supervisorEndpoint string
+		supervisorToken    string
 	)
 	flag.StringVar(&satelitEndpoint, "satelit", "127.0.0.1:9263", "satelit datastore api endpoint")
 	flag.StringVar(&teleskopInterface, "intf", "bond0.1000", "teleskop listen interface")
+	flag.StringVar(&supervisorEndpoint, "s-endpoint", "", "supervisor endpoint")
+	flag.StringVar(&supervisorToken, "s-token", "", "supervisor token")
 	flag.Parse()
 
 	links, err := netlink.LinkList()
@@ -151,7 +155,7 @@ func run() error {
 		dhcpServer:      dhcpServer,
 	}
 	pb.RegisterAgentServer(grpcServer, agent)
-	metadataServer := metadata.New(datastoreClient)
+	metadataServer := metadata.New(datastoreClient, supervisorEndpoint, supervisorToken)
 
 	eg, ctx := errgroup.WithContext(ctx)
 	eg.Go(func() error {
