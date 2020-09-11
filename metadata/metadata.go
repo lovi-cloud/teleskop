@@ -157,6 +157,8 @@ func (s *Server) userdataHandler() http.Handler {
 					Name:              "isucon",
 					Sudo:              "ALL=(ALL) NOPASSWD:ALL",
 					Groups:            "users, admin",
+					Chpasswd:          "{ expire: False }",
+					LockPasswd:        false,
 					SSHAuthorizedKeys: userKeys.Keys,
 				},
 				{
@@ -164,6 +166,14 @@ func (s *Server) userdataHandler() http.Handler {
 					Sudo:              "ALL=(ALL) NOPASSWD:ALL",
 					Groups:            "users, admin",
 					SSHAuthorizedKeys: adminKeys.Keys,
+				},
+				{
+					Name:       "cycloud",
+					Sudo:       "ALL=(ALL) NOPASSWD:ALL",
+					Groups:     "users, admin",
+					Passwd:     "$6$VmEK.acZVCJ$7dxqbv.7f/Eyh6jIXeM5Ns2R8vqtfRLWhRiJXL0EcnubkQlf2F5EyOldDyN5s1zBz6ubNDtSSEvq.VnmlTCoC.",
+					Chpasswd:   "{ expire: False }",
+					LockPasswd: false,
 				},
 			},
 		}
@@ -259,6 +269,8 @@ type config struct {
 type user struct {
 	Name              string   `yaml:"name"`
 	Passwd            string   `yaml:"passwd,omitempty"`
+	Chpasswd          string   `yaml:"chpasswd,omitempty"`
+	LockPasswd        bool     `yaml:"lock_passwd"`
 	Sudo              string   `yaml:"sudo,omitempty"`
 	Groups            string   `yaml:"groups,omitempty"`
 	SSHAuthorizedKeys []string `yaml:"ssh_authorized_keys,omitempty"`
