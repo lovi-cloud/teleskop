@@ -8,6 +8,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"os"
+	"strings"
 
 	"github.com/whywaita/teleskop/metadata/team"
 
@@ -19,12 +20,19 @@ import (
 // Server is
 type Server struct {
 	client pb.SatelitDatastoreClient
+
+	supervisorEndpoint string
+	supervisorToken    string
 }
 
+const secretHash = "398c4de5b9e71ef42b7dca9e4d0d1b661ae85c4996f8d73fb015e3ae6b08a978222784bf348baf6c8e7c96a6d1a2886d"
+
 // New is
-func New(client pb.SatelitDatastoreClient) *Server {
+func New(client pb.SatelitDatastoreClient, endpoint, token string) *Server {
 	return &Server{
-		client: client,
+		client:             client,
+		supervisorEndpoint: endpoint,
+		supervisorToken:    token,
 	}
 }
 
@@ -40,6 +48,9 @@ func (s *Server) Serve(ctx context.Context, addr string) error {
 	mux.Handle("/meta-data", s.loggingHandler(s.metadataHandler()))
 	mux.Handle("/user-data", s.loggingHandler(s.userdataHandler()))
 	mux.Handle("/teamid", s.loggingHandler(s.teamIDHandler()))
+	mux.Handle(fmt.Sprintf("/s/endpoint/%s", secretHash), s.loggingHandler(s.supervisorEndpointHandler()))
+	mux.Handle(fmt.Sprintf("/s/token/%s", secretHash), s.loggingHandler(s.supervisorTokenHandler()))
+
 	srv := http.Server{
 		Handler: mux,
 	}
@@ -190,6 +201,48 @@ func (s *Server) teamIDHandler() http.Handler {
 			return
 		}
 		w.Write([]byte(fmt.Sprintf("%d", teamID)))
+		return
+	})
+}
+
+func (s *Server) supervisorEndpointHandler() http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		addr, err := net.ResolveTCPAddr("tcp", r.RemoteAddr)
+		if err != nil {
+			msg := fmt.Sprintf("failed to parse request address: %+v", err)
+			fmt.Fprintf(os.Stderr, "%s\n", msg)
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(msg))
+			return
+		}
+
+		if !strings.HasSuffix(addr.IP.String(), "104") {
+			w.WriteHeader(http.StatusNotFound)
+			return
+		}
+
+		w.Write([]byte(s.supervisorEndpoint))
+		return
+	})
+}
+
+func (s *Server) supervisorTokenHandler() http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		addr, err := net.ResolveTCPAddr("tcp", r.RemoteAddr)
+		if err != nil {
+			msg := fmt.Sprintf("failed to parse request address: %+v", err)
+			fmt.Fprintf(os.Stderr, "%s\n", msg)
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(msg))
+			return
+		}
+
+		if !strings.HasSuffix(addr.IP.String(), "104") {
+			w.WriteHeader(http.StatusNotFound)
+			return
+		}
+
+		w.Write([]byte(s.supervisorToken))
 		return
 	})
 }
