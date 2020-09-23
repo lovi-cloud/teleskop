@@ -148,6 +148,8 @@ func (s *Server) userdataHandler() http.Handler {
 			return
 		}
 
+		teamAddrs := generateTeamAddrs(addr.IP)
+
 		config := config{
 			ManageEtcHosts: false,
 			Hostname:       nameResp.Hostname,
@@ -175,6 +177,12 @@ func (s *Server) userdataHandler() http.Handler {
 					Chpasswd:   "{ expire: False }",
 					LockPasswd: false,
 				},
+			},
+			BootCMD: []string{
+				strings.Join([]string{"cloud-init-per", "once", "update-etc-hosts-0", "echo", teamAddrs[0], "isu1.t.isucon.dev", ">>", "/etc/hosts"}, " "),
+				strings.Join([]string{"cloud-init-per", "once", "update-etc-hosts-1", "echo", teamAddrs[1], "isu2.t.isucon.dev", ">>", "/etc/hosts"}, " "),
+				strings.Join([]string{"cloud-init-per", "once", "update-etc-hosts-2", "echo", teamAddrs[2], "isu3.t.isucon.dev", ">>", "/etc/hosts"}, " "),
+				strings.Join([]string{"cloud-init-per", "once", "update-etc-hosts-3", "echo", teamAddrs[3], "isubench.t.isucon.dev", ">>", "/etc/hosts"}, " "),
 			},
 		}
 
@@ -255,6 +263,16 @@ func (s *Server) supervisorTokenHandler() http.Handler {
 		w.Write([]byte(s.supervisorToken))
 		return
 	})
+}
+
+func generateTeamAddrs(addr net.IP) []string {
+	prefix := strings.Split(addr.String(), ".")[:3]
+	result := []string{}
+	for i := 101; i < 105; i++ {
+		tmp := append(prefix, fmt.Sprintf("%d", i))
+		result = append(result, strings.Join(tmp, "."))
+	}
+	return result
 }
 
 type config struct {
