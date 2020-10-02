@@ -131,7 +131,7 @@ func (s *Server) userdataHandler() http.Handler {
 
 		var userKeys []string
 
-		if !strings.HasSuffix(addr.IP.String(), "104") {
+		if strings.HasSuffix(addr.IP.String(), "104") {
 			// 104 is bench server, not set isucon keys
 			userKeys = []string{}
 		} else {
