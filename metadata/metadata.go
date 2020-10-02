@@ -129,16 +129,26 @@ func (s *Server) userdataHandler() http.Handler {
 			return
 		}
 
-		userKeys, err := s.client.GetISUCONUserKeys(r.Context(), &pb.GetISUCONUserKeysRequest{
-			Address: addr.IP.String(),
-		})
-		if err != nil {
-			msg := fmt.Sprintf("failed to get ISUCON user keys: %+v", err)
-			fmt.Fprintf(os.Stderr, "%s\n", msg)
-			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte(msg))
-			return
+		var userKeys []string
+
+		if strings.HasSuffix(addr.IP.String(), "104") {
+			// 104 is bench server, not set isucon keys
+			userKeys = []string{}
+		} else {
+			resp, err := s.client.GetISUCONUserKeys(r.Context(), &pb.GetISUCONUserKeysRequest{
+				Address: addr.IP.String(),
+			})
+			if err != nil {
+				msg := fmt.Sprintf("failed to get ISUCON user keys: %+v", err)
+				fmt.Fprintf(os.Stderr, "%s\n", msg)
+				w.WriteHeader(http.StatusInternalServerError)
+				w.Write([]byte(msg))
+				return
+			}
+
+			userKeys = resp.Keys
 		}
+
 		adminKeys, err := s.client.GetISUCONAdminKeys(r.Context(), &pb.GetISUCONAdminKeysRequest{})
 		if err != nil {
 			msg := fmt.Sprintf("failed to get ISUCON admin keys: %+v", err)
@@ -161,7 +171,7 @@ func (s *Server) userdataHandler() http.Handler {
 					Groups:            "users, admin",
 					Chpasswd:          "{ expire: False }",
 					LockPasswd:        false,
-					SSHAuthorizedKeys: userKeys.Keys,
+					SSHAuthorizedKeys: userKeys,
 				},
 				{
 					Name:              "isucon-admin",
