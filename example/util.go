@@ -8,7 +8,7 @@ import (
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/keepalive"
 
-	pb "github.com/whywaita/teleskop/protoc/agent"
+	pb "github.com/lovi-cloud/teleskop/protoc/agent"
 )
 
 func SetupClient(ctx context.Context, addr string) (pb.AgentClient, error) {

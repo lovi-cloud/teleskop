@@ -13,7 +13,7 @@ import (
 	"google.golang.org/grpc/status"
 
 	dspb "github.com/whywaita/satelit/api/satelit_datastore"
-	pb "github.com/whywaita/teleskop/protoc/agent"
+	pb "github.com/lovi-cloud/teleskop/protoc/agent"
 )
 
 const domainTmplStr = `

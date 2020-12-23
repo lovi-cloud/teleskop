@@ -6,8 +6,8 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	"github.com/whywaita/go-os-brick/osbrick"
-	pb "github.com/whywaita/teleskop/protoc/agent"
+	"github.com/lovi-cloud/go-os-brick/osbrick"
+	pb "github.com/lovi-cloud/teleskop/protoc/agent"
 )
 
 func (a *agent) ConnectBlockDevice(ctx context.Context, req *pb.ConnectBlockDeviceRequest) (*pb.ConnectBlockDeviceResponse, error) {

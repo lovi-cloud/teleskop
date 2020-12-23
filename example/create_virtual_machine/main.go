@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/whywaita/teleskop/example"
+	"github.com/lovi-cloud/teleskop/example"
 
-	pb "github.com/whywaita/teleskop/protoc/agent"
+	pb "github.com/lovi-cloud/teleskop/protoc/agent"
 )
 
 const (

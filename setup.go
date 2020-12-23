@@ -4,10 +4,10 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/whywaita/go-os-brick/osbrick"
+	"github.com/lovi-cloud/go-os-brick/osbrick"
 
 	dspb "github.com/whywaita/satelit/api/satelit_datastore"
-	pb "github.com/whywaita/teleskop/protoc/agent"
+	pb "github.com/lovi-cloud/teleskop/protoc/agent"
 )
 
 func (a *agent) setup(ctx context.Context, hostname, endpoint string) error {

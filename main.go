@@ -12,7 +12,7 @@ import (
 
 	"github.com/vishvananda/netlink"
 
-	"github.com/whywaita/teleskop/metadata"
+	"github.com/lovi-cloud/teleskop/metadata"
 
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
@@ -25,8 +25,8 @@ import (
 	"google.golang.org/grpc"
 
 	dspb "github.com/whywaita/satelit/api/satelit_datastore"
-	"github.com/whywaita/teleskop/dhcp"
-	pb "github.com/whywaita/teleskop/protoc/agent"
+	"github.com/lovi-cloud/teleskop/dhcp"
+	pb "github.com/lovi-cloud/teleskop/protoc/agent"
 )
 
 const (

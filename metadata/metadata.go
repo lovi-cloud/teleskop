@@ -10,7 +10,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/whywaita/teleskop/metadata/team"
+	"github.com/lovi-cloud/teleskop/metadata/team"
 
 	yaml "gopkg.in/yaml.v2"
 

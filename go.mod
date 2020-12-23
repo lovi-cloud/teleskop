@@ -1,4 +1,4 @@
-module github.com/whywaita/teleskop
+module github.com/lovi-cloud/teleskop
 
 go 1.14
 
@@ -12,7 +12,7 @@ require (
 	github.com/grpc-ecosystem/go-grpc-middleware v1.2.1
 	github.com/mattn/go-colorable v0.1.7 // indirect
 	github.com/vishvananda/netlink v1.1.0
-	github.com/whywaita/go-os-brick v0.0.8
+	github.com/lovi-cloud/go-os-brick v0.1.0
 	github.com/whywaita/satelit v0.0.0-20200910103850-3de80b06797e
 	go.uber.org/zap v1.16.0
 	go.universe.tf/netboot v0.0.0-20200701170418-ddb47796bc4c
