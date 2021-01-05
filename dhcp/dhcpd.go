@@ -9,7 +9,7 @@ import (
 	"strings"
 	"sync"
 
-	pb "github.com/whywaita/satelit/api/satelit_datastore"
+	pb "github.com/lovi-cloud/satelit/api/satelit_datastore"
 	"go.universe.tf/netboot/dhcp4"
 )
 

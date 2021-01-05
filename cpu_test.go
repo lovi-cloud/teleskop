@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/go-test/deep"
-	pb "github.com/whywaita/satelit/api/satelit_datastore"
+	pb "github.com/lovi-cloud/satelit/api/satelit_datastore"
 )
 
 func TestParseNodeList(t *testing.T) {
