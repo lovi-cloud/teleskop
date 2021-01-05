@@ -10,23 +10,22 @@ import (
 	"os"
 	"time"
 
-	"github.com/vishvananda/netlink"
-
-	"github.com/lovi-cloud/teleskop/metadata"
-
-	"go.uber.org/zap"
-	"go.uber.org/zap/zapcore"
-
 	libvirt "github.com/digitalocean/go-libvirt"
 	grpc_middleware "github.com/grpc-ecosystem/go-grpc-middleware"
 	grpc_zap "github.com/grpc-ecosystem/go-grpc-middleware/logging/zap"
 	grpc_ctxtags "github.com/grpc-ecosystem/go-grpc-middleware/tags"
+
+	dspb "github.com/lovi-cloud/satelit/api/satelit_datastore"
+	"github.com/lovi-cloud/teleskop/dhcp"
+	"github.com/lovi-cloud/teleskop/metadata"
+	pb "github.com/lovi-cloud/teleskop/protoc/agent"
+
+	"github.com/vishvananda/netlink"
+	"go.uber.org/zap"
+	"go.uber.org/zap/zapcore"
+
 	"golang.org/x/sync/errgroup"
 	"google.golang.org/grpc"
-
-	dspb "github.com/whywaita/satelit/api/satelit_datastore"
-	"github.com/lovi-cloud/teleskop/dhcp"
-	pb "github.com/lovi-cloud/teleskop/protoc/agent"
 )
 
 const (
@@ -69,15 +68,11 @@ func initLogger() (*zap.Logger, error) {
 
 func run() error {
 	var (
-		satelitEndpoint    string
-		teleskopInterface  string
-		supervisorEndpoint string
-		supervisorToken    string
+		satelitEndpoint   string
+		teleskopInterface string
 	)
 	flag.StringVar(&satelitEndpoint, "satelit", "127.0.0.1:9263", "satelit datastore api endpoint")
 	flag.StringVar(&teleskopInterface, "intf", "bond0.1000", "teleskop listen interface")
-	flag.StringVar(&supervisorEndpoint, "s-endpoint", "", "supervisor endpoint")
-	flag.StringVar(&supervisorToken, "s-token", "", "supervisor token")
 	flag.Parse()
 
 	links, err := netlink.LinkList()
@@ -155,7 +150,7 @@ func run() error {
 		dhcpServer:      dhcpServer,
 	}
 	pb.RegisterAgentServer(grpcServer, agent)
-	metadataServer := metadata.New(datastoreClient, supervisorEndpoint, supervisorToken)
+	metadataServer := metadata.New(datastoreClient)
 
 	eg, ctx := errgroup.WithContext(ctx)
 	eg.Go(func() error {

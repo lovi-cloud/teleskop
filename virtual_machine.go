@@ -12,7 +12,7 @@ import (
 	"google.golang.org/grpc/codes"
 	"google.golang.org/grpc/status"
 
-	dspb "github.com/whywaita/satelit/api/satelit_datastore"
+	dspb "github.com/lovi-cloud/satelit/api/satelit_datastore"
 	pb "github.com/lovi-cloud/teleskop/protoc/agent"
 )
 
