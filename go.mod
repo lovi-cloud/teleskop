@@ -9,7 +9,7 @@ require (
 	github.com/golang/protobuf v1.4.2
 	github.com/grpc-ecosystem/go-grpc-middleware v1.2.1
 	github.com/lovi-cloud/go-os-brick v0.1.0
-	github.com/lovi-cloud/satelit v0.0.0-20210105151220-225b866f3453
+	github.com/lovi-cloud/satelit v0.0.0-20210105151711-33254010a43e
 	github.com/vishvananda/netlink v1.1.0
 	go.uber.org/zap v1.16.0
 	go.universe.tf/netboot v0.0.0-20200701170418-ddb47796bc4c
