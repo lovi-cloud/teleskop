@@ -144,35 +144,19 @@ func run() error {
 		),
 	)
 	dhcpServer := dhcp.NewServer(datastoreClient)
-	agent := &agent{
+	agentServer := &agent{
 		libvirtClient:   libvirtClient,
 		datastoreClient: datastoreClient,
 		dhcpServer:      dhcpServer,
 	}
-	pb.RegisterAgentServer(grpcServer, agent)
+	pb.RegisterAgentServer(grpcServer, agentServer)
 	metadataServer := metadata.New(datastoreClient)
 
+	if err := setup(ctx, teleskopInterface, agentServer); err != nil {
+		return err
+	}
+
 	eg, ctx := errgroup.WithContext(ctx)
-	eg.Go(func() error {
-		hostname, err := os.Hostname()
-		if err != nil {
-			return err
-		}
-		link, err := netlink.LinkByName(teleskopInterface)
-		if err != nil {
-			return err
-		}
-		addrs, err := netlink.AddrList(link, netlink.FAMILY_V4)
-		if err != nil {
-			return err
-		}
-		for _, addr := range addrs {
-			if ip := addr.IP.To4(); ip != nil {
-				return agent.setup(ctx, hostname, fmt.Sprintf("%s:%d", ip.String(), 5000))
-			}
-		}
-		return fmt.Errorf("failed to find valid address on interface=%s", teleskopInterface)
-	})
 	eg.Go(func() error {
 		fmt.Printf("listening on address %s\n", listenAddress)
 		return grpcServer.Serve(lis)
@@ -192,6 +176,27 @@ func run() error {
 	}
 
 	return nil
+}
+
+func setup(ctx context.Context, teleskopInterface string, agentServer *agent) error {
+	hostname, err := os.Hostname()
+	if err != nil {
+		return err
+	}
+	link, err := netlink.LinkByName(teleskopInterface)
+	if err != nil {
+		return err
+	}
+	addrs, err := netlink.AddrList(link, netlink.FAMILY_V4)
+	if err != nil {
+		return err
+	}
+	for _, addr := range addrs {
+		if ip := addr.IP.To4(); ip != nil {
+			return agentServer.setup(ctx, hostname, fmt.Sprintf("%s:%d", ip.String(), 5000))
+		}
+	}
+	return fmt.Errorf("failed to find valid address on interface=%s", teleskopInterface)
 }
 
 func isValidLinkName(links []netlink.Link, name string) bool {

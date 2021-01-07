@@ -48,7 +48,7 @@ func GetLocalNUMANodes() ([]*pb.NumaNode, error) {
 func ParseNodeList(cpulist string) (*pb.NumaNode, error) {
 	coreIDs := strings.Split(cpulist, ",")
 	if len(coreIDs) != 2 {
-		// don't allow two NUMA node
+		// don't allow not two NUMA node
 		return nil, fmt.Errorf("invalid NUMA topology")
 	}
 	list1, err := extractCoreID(coreIDs[0])
