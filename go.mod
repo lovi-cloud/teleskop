@@ -18,3 +18,5 @@ require (
 	google.golang.org/protobuf v1.25.0
 	gopkg.in/yaml.v2 v2.3.0
 )
+
+replace github.com/lovi-cloud/satelit v0.0.1 => github.com/lovi-cloud/satelit v0.0.0-20210112143548-e07eb76192d7
