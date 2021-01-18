@@ -1,0 +1,36 @@
+name: build
+on:
+  push:
+    branches:
+      - "**"
+  pull_request: {}
+
+env:
+  GOPRIVATE: "github.com/lovi-cloud/*"
+
+jobs:
+  test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - ubuntu-latest
+    steps:
+      - name: setup go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.15
+      - name: checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 1
+      - name: Granting private modules access
+        run: |
+          git config --global url."https://whywaita:${{ secrets.GO_MODULES_TOKEN }}@github.com/lovi-cloud".insteadOf "https://github.com/lovi-cloud"
+      - name: go mod download
+        run: |
+          go mod download
+      - name: build
+        run: |
+          go build .
