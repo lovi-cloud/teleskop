@@ -1,6 +1,6 @@
-# Teleskop
+<div align="center"><img src="https://raw.githubusercontent.com/lovi-cloud/teleskop/master/docs/image/teleskop-logo.png" width="800"/></div>
 
-teleskop is agent of [lovi-cloud](https://github.com/lovi-cloud).
+# Teleskop: Agent of [lovi-cloud](https://github.com/lovi-cloud)
 
 ## Features
 
