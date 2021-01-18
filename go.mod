@@ -8,7 +8,7 @@ require (
 	github.com/go-test/deep v1.0.7
 	github.com/golang/protobuf v1.4.2
 	github.com/grpc-ecosystem/go-grpc-middleware v1.2.1
-	github.com/lovi-cloud/go-os-brick v0.1.0
+	github.com/lovi-cloud/go-os-brick v0.2.0
 	github.com/lovi-cloud/satelit v0.0.1
 	github.com/vishvananda/netlink v1.1.0
 	go.uber.org/zap v1.16.0
@@ -18,3 +18,5 @@ require (
 	google.golang.org/protobuf v1.25.0
 	gopkg.in/yaml.v2 v2.3.0
 )
+
+replace github.com/lovi-cloud/satelit v0.0.1 => github.com/lovi-cloud/satelit v0.0.0-20210112143548-e07eb76192d7
