@@ -13,6 +13,8 @@ service Agent {
   rpc AddSecurityGroup(AddSecurityGroupRequest)
       returns (AddSecurityGroupResponse) {}
 
+  rpc GetInterfaceName(GetInterfaceNameRequest)
+      returns (GetInterfaceNameResponse) {}
   rpc AddBridge(AddBridgeRequest) returns (AddBridgeResponse) {}
   rpc AddVLANInterface(AddVLANInterfaceRequest)
       returns (AddVLANInterfaceResponse) {}
@@ -79,6 +81,8 @@ message AddSecurityGroupRequest {
   string ip_address  = 2;
   string mac_address = 3;
 }
+
+message GetInterfaceNameRequest {}
 
 message AddBridgeRequest {
   string name          = 1;
@@ -194,6 +198,10 @@ message GetIPTablesResponse {}
 message SetupDefaultSecurityGroupResponse {}
 
 message AddSecurityGroupResponse {}
+
+message GetInterfaceNameResponse {
+  string interface_name = 1;
+}
 
 message AddBridgeResponse {}
 

@@ -36,6 +36,8 @@ type agent struct {
 	libvirtClient   *libvirt.Libvirt
 	datastoreClient dspb.SatelitDatastoreClient
 	dhcpServer      *dhcp.Server
+
+	interfaceName string
 }
 
 func main() {
@@ -148,6 +150,7 @@ func run() error {
 		libvirtClient:   libvirtClient,
 		datastoreClient: datastoreClient,
 		dhcpServer:      dhcpServer,
+		interfaceName:   teleskopInterface,
 	}
 	pb.RegisterAgentServer(grpcServer, agentServer)
 	metadataServer := metadata.New(datastoreClient)

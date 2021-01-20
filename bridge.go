@@ -24,6 +24,12 @@ const networkTmplStr = `
 
 var networkTmpl *template.Template
 
+func (a *agent) GetInterfaceName(ctx context.Context, req *pb.GetInterfaceNameRequest) (*pb.GetInterfaceNameResponse, error) {
+	return &pb.GetInterfaceNameResponse{
+		InterfaceName: a.interfaceName,
+	}, nil
+}
+
 func (a *agent) AddBridge(ctx context.Context, req *pb.AddBridgeRequest) (*pb.AddBridgeResponse, error) {
 	if networkTmpl == nil {
 		tmp, err := template.New("networkTmpl").Parse(networkTmplStr)
