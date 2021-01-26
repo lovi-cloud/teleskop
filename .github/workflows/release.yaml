@@ -4,6 +4,9 @@ on:
     tags:
       - "v[0-9]+.[0-9]+.[0-9]+"
 
+env:
+  GOPRIVATE: "github.com/lovi-cloud/*"
+
 jobs:
   goreleaser:
     runs-on: ubuntu-latest
@@ -16,6 +19,9 @@ jobs:
         uses: actions/setup-go@v2
         with:
           go-version: 1.15
+      - name: Granting private modules access
+        run: |
+          git config --global url."https://whywaita:${{ secrets.GO_MODULES_TOKEN }}@github.com/lovi-cloud".insteadOf "https://github.com/lovi-cloud"
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v2
         with:
