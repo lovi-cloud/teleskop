@@ -10,7 +10,7 @@ import (
 	pb "github.com/lovi-cloud/teleskop/protoc/agent"
 )
 
-func (a *agent) setup(ctx context.Context, hostname, endpoint string) error {
+func (a *agent) setup(ctx context.Context, hostname, endpoint, parentInterfaceName string) error {
 	resp, err := a.datastoreClient.ListBridge(ctx, &dspb.ListBridgeRequest{})
 	if err != nil {
 		return err
@@ -30,14 +30,14 @@ func (a *agent) setup(ctx context.Context, hostname, endpoint string) error {
 		}
 		_, err = a.AddVLANInterface(ctx, &pb.AddVLANInterfaceRequest{
 			VlanId:          bridge.VlanId,
-			ParentInterface: bridge.ParentInterface,
+			ParentInterface: parentInterfaceName,
 		})
 		if err != nil {
 			return err
 		}
 		_, err = a.AddInterfaceToBridge(ctx, &pb.AddInterfaceToBridgeRequest{
 			Bridge:    bridge.Name,
-			Interface: fmt.Sprintf("%s.%d", bridge.ParentInterface, bridge.VlanId),
+			Interface: fmt.Sprintf("%s.%d", parentInterfaceName, bridge.VlanId),
 		})
 		if err != nil {
 			return err

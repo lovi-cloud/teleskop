@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"net"
 	"os"
+	"strings"
 	"time"
 
 	libvirt "github.com/digitalocean/go-libvirt"
@@ -194,9 +195,10 @@ func setup(ctx context.Context, teleskopInterface string, agentServer *agent) er
 	if err != nil {
 		return err
 	}
+
 	for _, addr := range addrs {
 		if ip := addr.IP.To4(); ip != nil {
-			return agentServer.setup(ctx, hostname, fmt.Sprintf("%s:%d", ip.String(), 5000))
+			return agentServer.setup(ctx, hostname, fmt.Sprintf("%s:%d", ip.String(), 5000), trimVlanID(teleskopInterface))
 		}
 	}
 	return fmt.Errorf("failed to find valid address on interface=%s", teleskopInterface)
@@ -209,4 +211,13 @@ func isValidLinkName(links []netlink.Link, name string) bool {
 		}
 	}
 	return false
+}
+
+func trimVlanID(interfaceName string) string {
+	if !strings.Contains(interfaceName, ".") {
+		return interfaceName
+	}
+
+	s := strings.Split(interfaceName, ".")
+	return s[0]
 }
