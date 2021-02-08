@@ -1,6 +1,6 @@
-<div align="center"><img src="https://raw.githubusercontent.com/lovi-cloud/teleskop/master/docs/image/teleskop-logo.png" width="800"/></div>
-
 # Teleskop: Agent of [lovi-cloud](https://github.com/lovi-cloud)
+
+![logo](./docs/image/teleskop-logo.png)
 
 ## Features
 
@@ -14,8 +14,11 @@ teleskop requires root permission.
 
 ```bash
 ## build
-go generate ./...
-go build .
+$ go generate ./...
+$ go build .
+
+## route to metadata server
+$ sudo ip addr add 169.254.169.254/32 dev lo
 
 ## run
 $ teleskop -help
@@ -24,6 +27,7 @@ Usage of /usr/local/bin/teleskop:
         teleskop listen interface (default "bond0.1000")
   -satelit string
         satelit datastore api endpoint (default "127.0.0.1:9263")
+   
 ```
 
 ### systemd unit file
