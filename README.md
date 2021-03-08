@@ -1,6 +1,10 @@
-# Teleskop: Agent of [lovi-cloud](https://github.com/lovi-cloud)
+# teleskop: Agent of [lovi-cloud](https://github.com/lovi-cloud)
 
 ![logo](./docs/image/teleskop-logo.png)
+
+teleskop is an agent of the data plane for [lovi-cloud](https://github.com/lovi-cloud).
+
+The name "teleskop" is derived from a Bosnian word that means "telescope".
 
 ## Features
 
@@ -27,8 +31,9 @@ Usage of /usr/local/bin/teleskop:
         teleskop listen interface (default "bond0.1000")
   -satelit string
         satelit datastore api endpoint (default "127.0.0.1:9263")
-   
 ```
+
+more information is [docs](https://github.com/lovi-cloud/docs)!
 
 ### systemd unit file
 
